@@ -31,9 +31,9 @@ data_table_layout = html.Div(
             tag_model_df.to_dict('records'),
             [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
-            # page_current=0,
-            # page_size=5,
-            # page_action='native',
+            page_current=0,
+            page_size=5,
+            page_action='native',
             style_table={
                 'height': "50%",
             },

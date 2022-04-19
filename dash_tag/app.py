@@ -43,11 +43,12 @@ def on_btn_click(*arg):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[on_btn_click]: button_id: {button_id}')
 
-    selected_row_index = data_table[active_cell['row']]['index']
+    selected_row_index = data_table[active_cell['row']]['tag_index']
     print(f'[on_btn_click]: selected_row_index: {selected_row_index}')
 
     tag_model_df.at[selected_row_index, 'continent'] = button_id
     untagged_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
+    untagged_model_df['id'] = range(0, len(untagged_model_df))
 
     nof_tags_left = len(untagged_model_df)
     percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
@@ -81,17 +82,27 @@ def on_btn_click(*arg):
 )
 def update_details(active_cell, data_table):
     print(f'[update_details]: Start')
-    print(f'[update_details]: active_cell {active_cell}')
+
 
     if len(data_table) == 0:
         return "None", "None"
 
     if active_cell is None:
         return "None", "None"
-    # selected_row_index = model[active_cell["row"]]
-    row = data_table[active_cell['row']]
+
+    print(f'[update_details]: active_cell {active_cell}')
+
+    row = active_cell["row"]
+    row_id = active_cell["row_id"]
+
+    # row_index = data_table[row]['index']
+    # row_id_index = data_table[row]['index']
+
+    # print(f'[update_details]: row_index {row_index}, row_id_index {row_id_index}')
+
+    row_text = data_table[row_id]
     print(f'[update_details]: End')
-    return row['country'], row['continent']
+    return row_text['country'], row_text['continent']
 
 
 # @app.callback(

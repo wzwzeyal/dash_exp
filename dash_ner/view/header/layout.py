@@ -5,6 +5,6 @@ header_layout = html.Div(
     [
         html.H1("Dash NER"),
         html.Div(id='container'),
-        # dbc.Store(id='selected_indices')
+        # html.Div(id='container')
     ], style={'textAlign': 'center'},
 )

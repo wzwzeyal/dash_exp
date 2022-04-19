@@ -1,9 +1,8 @@
 import dash_bootstrap_components as dbc
+from dash import dash_table
 from dash import html
-import pandas as pd
-from dash import Dash, dash_table
 
-from Model.data_frame import no_but_model_df
+from Data.data_frame import ner_model_df
 
 # data_table_layout = html.Div(
 #     dbc.Table.from_dataframe(model_df, striped=True, bordered=True, hover=True)
@@ -15,19 +14,14 @@ data_table_layout = html.Div(
         dbc.Input(
             id='selected-row-id',
             type="number",
-            # disabled=True,
         ),
 
-        dbc.Progress(
-            id='but-complete',
-            value=50),
-
         dash_table.DataTable(
-            no_but_model_df.to_dict('records'),
-            [{"name": i, "id": i} for i in no_but_model_df.columns],
+            ner_model_df.to_dict('records'),
+            [{"name": i, "id": i} for i in ner_model_df.columns],
             id='model',
             filter_action='native',
-            row_selectable="single",
+            # row_selectable="single",
             # selected_rows=
             style_table={
                 'height': 400,
@@ -38,7 +32,6 @@ data_table_layout = html.Div(
                 'textOverflow': 'ellipsis',
             }
         ),
-
 
     ],
     style=dict(

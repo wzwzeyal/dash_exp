@@ -2,7 +2,7 @@ from dash import html
 from dash import dcc
 import dash_bootstrap_components as dbc
 
-from Model.data_frame import ner_value
+from Data.data_frame import ner_value
 
 ner_btn_lst = []
 

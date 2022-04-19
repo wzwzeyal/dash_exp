@@ -3,14 +3,11 @@
 
 # sudo kill $(sudo lsof -t -i:8050)
 import numpy as np
-from dash import Dash
-import dash_bootstrap_components as dbc
-from dash import Dash, dcc, html, Input, Output, State, MATCH, ALL, no_update, callback_context
+from dash import Dash, Input, Output, State, no_update, callback_context
 
 from Model.data_frame import model_df
 from resources.strings import items_list
 from view.layout import create_layout
-import pandas as pd
 
 app = Dash(
     __name__, )
@@ -21,7 +18,6 @@ app.layout = create_layout()
 input_callback = []
 for item in items_list:
     input_callback.append(Input(item, 'n_clicks'))
-
 
 
 @app.callback(Output('container', 'children'),
@@ -40,7 +36,7 @@ def on_btn_click(*arg):
         return no_update
 
     if len(model) == 0:
-        return  no_update
+        return no_update
 
     print(selected_row_ids)
     ctx = callback_context
@@ -60,7 +56,8 @@ def on_btn_click(*arg):
 
             # model_df.iloc[selected_row_id]['continent'] = button_id
             # print(type(model))
-            return button_id, no_but_model_df.to_dict('records'), selected_row_ids, percent_complete  # model_df.to_dict('records')
+            return button_id, no_but_model_df.to_dict(
+                'records'), selected_row_ids, percent_complete  # model_df.to_dict('records')
 
     # if selected_row_id != np.nan:
     #     print(model_df.iloc[selected_row_id])

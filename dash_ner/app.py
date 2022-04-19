@@ -7,7 +7,7 @@ import ast
 import dash_bootstrap_components as dbc
 from dash import State, ALL, no_update, callback_context, MATCH, Dash, Input, Output
 
-from Data.data_frame import ner_value
+from data.data_frame import ner_value
 from layout.main_layout import create_layout
 
 app = Dash(

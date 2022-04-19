@@ -2,15 +2,11 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 # sudo kill $(sudo lsof -t -i:8050)
-import numpy as np
-from dash import Dash
-import dash_bootstrap_components as dbc
-from dash import Dash, dcc, html, Input, Output, State, MATCH, ALL, no_update, callback_context
+from dash import Dash, Input, Output, State, no_update, callback_context
 
 from data.data_frame import tag_model_df
-from resources.strings import tag_button_names
 from layout.main_layout import create_layout
-import pandas as pd
+from resources.strings import tag_button_names
 
 app = Dash(
     __name__, )
@@ -18,72 +14,59 @@ app = Dash(
 
 app.layout = create_layout()
 
-input_callback = []
+tag_buttons_input = []
 for item in tag_button_names:
-    input_callback.append(Input(item, 'n_clicks'))
+    tag_buttons_input.append(Input(item, 'n_clicks'))
 
 
-
-@app.callback(Output('container', 'children'),
-              Output('model', 'data'),
-              Output('model', 'selected_rows'),
-              Output('but-complete', 'value'),
-              input_callback,
-              State('model', 'data'),  # -2
-              State('model', 'selected_rows'),  # -1
+@app.callback(Output('records-data-table', 'data'),
+              Output('tag-complete-progress', 'value'),
+              Output('selected-row-id', 'value'),
+              tag_buttons_input,
+              State('records-data-table', 'data'),  # -2
+              State('records-data-table', 'active_cell'),  # -1
               )
 def on_btn_click(*arg):
-    selected_row_ids = arg[-1]
+    print(f'[on_btn_click]: Start')
+    active_cell = arg[-1]
     model = arg[-2]
 
-    if selected_row_ids is None:
+    if active_cell is None:
         return no_update
 
     if len(model) == 0:
-        return  no_update
+        return no_update
 
-    print(selected_row_ids)
+    print(active_cell)
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if len(selected_row_ids) == 1:
-        if type(selected_row_ids[0]) == int:
-            selected_row_index = model[selected_row_ids[0]]['index']
-            # row_model = model[selected_row_id]
-            # print(row_model)
-            # row_model['continent'] = button_id
+    selected_row_index = model[active_cell['row_id']]['index']
 
-            tag_model_df.at[selected_row_index, 'continent'] = button_id
-            no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
-            percent_complete = (len(tag_model_df) - len(no_but_model_df)) / len(tag_model_df)
-            percent_complete *= 100
+    tag_model_df.at[selected_row_index, 'continent'] = button_id
+    no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
+    percent_complete = (len(tag_model_df) - len(no_but_model_df)) / len(tag_model_df)
+    percent_complete *= 100
 
-            # model_df.iloc[selected_row_id]['continent'] = button_id
-            # print(type(model))
-            return button_id, no_but_model_df.to_dict('records'), selected_row_ids, percent_complete  # model_df.to_dict('records')
-
-    # if selected_row_id != np.nan:
-    #     print(model_df.iloc[selected_row_id])
-
-    return no_update
+    return no_but_model_df.to_dict('records'), percent_complete, active_cell['row_id']
 
 
 @app.callback(
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
-    Output('selected-row-id', 'value'),
-    Input('model', 'selected_rows'),
-    State('model', 'data'),
+    Input('records-data-table', 'active_cell'),  # -2
+    Input('records-data-table', 'data'),  # -1
 )
-def update_details(table_selected_rows, model):
-    if table_selected_rows is None:
-        return "None", "None", np.nan
-    if len(table_selected_rows) == 1:
-        if len(model) > 0:
-            selected_row_index = model[table_selected_rows[0]]['index']
-            row = tag_model_df.iloc[selected_row_index]
-            return row['country'], row['continent'], row['index']
-    return no_update, no_update, no_update
+def update_details(active_cell, data_table):
+    print(f'[update_details]: Start')
+    print(f'[update_details]: active_cell {active_cell}')
+    print(callback_context.triggered[0])
+
+    if active_cell is None:
+        return "None", "None"
+    # selected_row_index = model[active_cell["row"]]
+    row = data_table[active_cell['row_id']]
+    return row['country'], row['continent']
 
 
 # @app.callback(

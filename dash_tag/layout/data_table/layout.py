@@ -20,18 +20,16 @@ data_table_layout = html.Div(
         ),
 
         dbc.Progress(
-            id='but-complete',
-            value=50),
+            id='tag-complete-progress',
+            value=0),
 
         dash_table.DataTable(
             tag_model_df.to_dict('records'),
             [{"name": i, "id": i} for i in tag_model_df.columns],
-            id='model',
+            id='records-data-table',
             filter_action='native',
-            row_selectable="single",
-            # selected_rows=
             style_table={
-                'height': 400,
+                'height': "50%",
             },
             style_data={
                 'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',

@@ -7,6 +7,7 @@ from dash import Dash, Input, Output, State, no_update, callback_context
 from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
+import dash_bootstrap_components as dbc
 
 app = Dash(
     __name__, )
@@ -21,10 +22,10 @@ for item in tag_button_names:
 
 @app.callback(Output('records-data-table', 'data'),
               Output('tag-complete-progress', 'value'),
-              Output('table-status', 'children'),
+              Output('table-status-div', 'children'),
               tag_buttons_input,
               State('records-data-table', 'active_cell'),  # -2
-              State('records-data-table', 'data'), prevent_initial_call=True # -1
+              State('records-data-table', 'data'), prevent_initial_call=True  # -1
               )
 def on_btn_click(*arg):
     print(f'[on_btn_click]: Start')
@@ -32,36 +33,51 @@ def on_btn_click(*arg):
     active_cell = arg[-2]
 
     if len(data_table) == 0:
-        return  no_update, 100, "Congrtas";
+        return no_update
 
     if active_cell is None:
         return no_update
-
-
 
     print(f'[on_btn_click]: active_cell: {active_cell}')
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[on_btn_click]: button_id: {button_id}')
-    
+
     selected_row_index = data_table[active_cell['row']]['index']
     print(f'[on_btn_click]: selected_row_index: {selected_row_index}')
 
     tag_model_df.at[selected_row_index, 'continent'] = button_id
-    no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
-    percent_complete = (len(tag_model_df) - len(no_but_model_df)) / len(tag_model_df)
+    untagged_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
+
+    nof_tags_left = len(untagged_model_df)
+    percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
     percent_complete *= 100
-    
+
+    if nof_tags_left > 0:
+        alert = dbc.Alert(
+            f'Only {len(untagged_model_df)} left, keep up the good work !',
+            color='primary',
+        )
+
+    else:
+        alert = dbc.Alert(
+            f'Congratulations ! No more tagging',
+            color='success',
+        )
+
+
+
+
     print(f'[on_btn_click]: End')
 
-    return no_but_model_df.to_dict('records'), percent_complete, active_cell['row_id']
+    return untagged_model_df.to_dict('records'), percent_complete, alert
 
 
 @app.callback(
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
     Input('records-data-table', 'active_cell'),  # -2
-    Input('records-data-table', 'data'),  prevent_initial_call=True# -1
+    Input('records-data-table', 'data'), prevent_initial_call=True  # -1
 )
 def update_details(active_cell, data_table):
     print(f'[update_details]: Start')

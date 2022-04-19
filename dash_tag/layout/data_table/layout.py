@@ -10,14 +10,17 @@ from data.data_frame import tag_model_df
 # )
 
 
-
 data_table_layout = html.Div(
     [
-        dbc.Alert(
-            "table-status",
-            id='table-status',
-            color='primary',
-            # disabled=True,
+        html.Div(
+            id='table-status-div',
+            children=dbc.Alert(
+                f'Only {len(tag_model_df)} left, keep up the good work !',
+                id='table-status',
+                color='primary',
+                # children=html.Div(str(len(tag_model_df))),
+                # disabled=True,
+            ),
         ),
 
         dbc.Progress(
@@ -28,7 +31,9 @@ data_table_layout = html.Div(
             tag_model_df.to_dict('records'),
             [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
-            filter_action='native',
+            # page_current=0,
+            # page_size=5,
+            # page_action='native',
             style_table={
                 'height': "50%",
             },
@@ -38,7 +43,6 @@ data_table_layout = html.Div(
                 'textOverflow': 'ellipsis',
             }
         ),
-
 
     ],
     style=dict(

@@ -63,6 +63,7 @@ ner_layout = html.Div(
                 'direction': 'rtl',
             }),
 
+        html.Br(),
         # dcc.store("style_array", ),
     ]
 )

@@ -14,6 +14,7 @@ tag_model_df = pd.DataFrame() #pd.read_csv('https://raw.githubusercontent.com/pl
 # model_df = model_df.head(5)
 tag_model_df['index'] = range(0, len(tag_model_df))
 
+
 no_but_model_df = tag_model_df.copy()
 no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
 

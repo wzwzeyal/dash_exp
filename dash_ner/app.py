@@ -32,7 +32,7 @@ for count, color in enumerate(ner_value):
 @app.callback(
     # Output('container', 'children'),
     # Output({'type': 'button-container', 'index': MATCH}, 'style'),
-    Output({'type': 'button-container', 'index': MATCH}, 'disabled'),
+    Output({'type': 'button-container', 'index': MATCH}, 'outline'),
     Input({'type': 'button-container', 'index': ALL}, 'n_clicks'),
     prevent_initial_call=True
 )
@@ -46,7 +46,7 @@ def on_ner_text_click(values):
     if ctx.triggered[0]['value'] is None:
         print(f'[on_ner_text_click]: no_update')
         print(f'[on_ner_text_click]: End')
-        return False
+        return True
     print(f"[on_ner_text_click]: button_dict' {button_dict}")
     selected_indices_set.add(button_dict['index'])
     print(f'[on_ner_text_click]: selected_indices_set: {selected_indices_set}')
@@ -69,16 +69,19 @@ def on_ner_button_click(*args):
     print(f'[on_ner_button_click]: selected_indices_set: {selected_indices_set}')
     # print(app.layout.children[1].children[selected_index].style)
 
-    res = [no_update] * len(callback_context.outputs_list)
+    style_res = [no_update] * len(callback_context.outputs_list)
     for index in selected_indices_set:
-        res[index] = dict(
-            color="black",
-            border=f"2px solid {button_id}",
-            padding=0
-        )
+        style_res[index] = {
+            'background-color': "#F5F5F5",
+            'color': "black",
+            'border': f"2px solid {button_id}",
+            'padding': 0,
+
+            # 'background-color': 'light-gray',
+        }
     selected_indices_set.clear()
     print(f'[on_ner_button_click]: End')
-    return res
+    return style_res
 
 
 @app.callback(
@@ -114,6 +117,8 @@ def update_text_buttons(active_cell, data):
             # disabled=True,
             className="me-1",
             outline=True,
+
+
             style={
                 "color": "black",
                 # "border": "2px solid #4CAF50",

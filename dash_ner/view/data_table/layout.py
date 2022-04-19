@@ -26,6 +26,7 @@ data_table_layout = html.Div(
             style_table={
                 'height': 400,
             },
+
             style_data={
                 'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
                 'overflow': 'hidden',

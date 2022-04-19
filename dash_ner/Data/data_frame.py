@@ -9,7 +9,6 @@ ner_model_df = pd.read_csv('./resources/test.tsv', sep='\t').head(10)[['comment'
 # ner_model_df['index'] = range(0, len(ner_model_df))
 # ner_model_df['ner_status'] = False
 
-
 # un_ner_model_df = ner_model_df.copy()
 
 

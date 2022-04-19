@@ -23,30 +23,34 @@ for item in tag_button_names:
               Output('tag-complete-progress', 'value'),
               Output('selected-row-id', 'value'),
               tag_buttons_input,
-              State('records-data-table', 'data'),  # -2
-              State('records-data-table', 'active_cell'),  # -1
+              State('records-data-table', 'active_cell'),  # -2
+              State('records-data-table', 'data'), prevent_initial_call=True # -1
               )
 def on_btn_click(*arg):
     print(f'[on_btn_click]: Start')
-    active_cell = arg[-1]
-    model = arg[-2]
+    data_table = arg[-1]
+    active_cell = arg[-2]
 
     if active_cell is None:
         return no_update
 
-    if len(model) == 0:
+    if len(data_table) == 0:
         return no_update
 
-    print(active_cell)
+    print(f'[on_btn_click]: active_cell: {active_cell}')
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
-    selected_row_index = model[active_cell['row_id']]['index']
+    print(f'[on_btn_click]: button_id: {button_id}')
+    
+    selected_row_index = data_table[active_cell['row']]['index']
+    print(f'[on_btn_click]: selected_row_index: {selected_row_index}')
 
     tag_model_df.at[selected_row_index, 'continent'] = button_id
     no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
     percent_complete = (len(tag_model_df) - len(no_but_model_df)) / len(tag_model_df)
     percent_complete *= 100
+    
+    print(f'[on_btn_click]: End')
 
     return no_but_model_df.to_dict('records'), percent_complete, active_cell['row_id']
 
@@ -55,17 +59,18 @@ def on_btn_click(*arg):
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
     Input('records-data-table', 'active_cell'),  # -2
-    Input('records-data-table', 'data'),  # -1
+    Input('records-data-table', 'data'),  prevent_initial_call=True# -1
 )
 def update_details(active_cell, data_table):
     print(f'[update_details]: Start')
     print(f'[update_details]: active_cell {active_cell}')
-    print(callback_context.triggered[0])
+
 
     if active_cell is None:
         return "None", "None"
     # selected_row_index = model[active_cell["row"]]
-    row = data_table[active_cell['row_id']]
+    row = data_table[active_cell['row']]
+    print(f'[update_details]: End')
     return row['country'], row['continent']
 
 

@@ -21,7 +21,7 @@ for item in tag_button_names:
 
 @app.callback(Output('records-data-table', 'data'),
               Output('tag-complete-progress', 'value'),
-              Output('selected-row-id', 'value'),
+              Output('table-status', 'children'),
               tag_buttons_input,
               State('records-data-table', 'active_cell'),  # -2
               State('records-data-table', 'data'), prevent_initial_call=True # -1
@@ -31,11 +31,13 @@ def on_btn_click(*arg):
     data_table = arg[-1]
     active_cell = arg[-2]
 
+    if len(data_table) == 0:
+        return  no_update, 100, "Congrtas";
+
     if active_cell is None:
         return no_update
 
-    if len(data_table) == 0:
-        return no_update
+
 
     print(f'[on_btn_click]: active_cell: {active_cell}')
     ctx = callback_context
@@ -65,6 +67,8 @@ def update_details(active_cell, data_table):
     print(f'[update_details]: Start')
     print(f'[update_details]: active_cell {active_cell}')
 
+    if len(data_table) == 0:
+        return "None", "None"
 
     if active_cell is None:
         return "None", "None"

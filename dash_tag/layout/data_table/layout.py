@@ -13,9 +13,10 @@ from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-        dbc.Input(
-            id='selected-row-id',
-            type="number",
+        dbc.Alert(
+            "table-status",
+            id='table-status',
+            color='primary',
             # disabled=True,
         ),
 

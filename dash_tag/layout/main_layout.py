@@ -1,10 +1,10 @@
 from dash import html, dcc
 
-from view.data_table.layout import data_table_layout
-from view.header.layout import header_layout
-from view.text_area.layout import text_area_layout
-from view.button_array.layout import button_array_layout
-from view.button_navig.layout import button_navig_layout
+from layout.data_table.layout import data_table_layout
+from layout.header.layout import header_layout
+from layout.text_area.layout import text_area_layout
+from layout.button_array.layout import button_array_layout
+from layout.button_navig.layout import button_navig_layout
 
 
 def create_layout():

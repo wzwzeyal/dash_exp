@@ -3,11 +3,14 @@
 
 # sudo kill $(sudo lsof -t -i:8050)
 import numpy as np
-from dash import Dash, Input, Output, State, no_update, callback_context
+from dash import Dash
+import dash_bootstrap_components as dbc
+from dash import Dash, dcc, html, Input, Output, State, MATCH, ALL, no_update, callback_context
 
-from Model.data_frame import model_df
-from resources.strings import items_list
-from view.layout import create_layout
+from data.data_frame import tag_model_df
+from resources.strings import tag_button_names
+from layout.main_layout import create_layout
+import pandas as pd
 
 app = Dash(
     __name__, )
@@ -16,8 +19,9 @@ app = Dash(
 app.layout = create_layout()
 
 input_callback = []
-for item in items_list:
+for item in tag_button_names:
     input_callback.append(Input(item, 'n_clicks'))
+
 
 
 @app.callback(Output('container', 'children'),
@@ -36,7 +40,7 @@ def on_btn_click(*arg):
         return no_update
 
     if len(model) == 0:
-        return no_update
+        return  no_update
 
     print(selected_row_ids)
     ctx = callback_context
@@ -49,15 +53,14 @@ def on_btn_click(*arg):
             # print(row_model)
             # row_model['continent'] = button_id
 
-            model_df.at[selected_row_index, 'continent'] = button_id
-            no_but_model_df = model_df[~model_df['continent'].str.contains('but')]
-            percent_complete = (len(model_df) - len(no_but_model_df)) / len(model_df)
+            tag_model_df.at[selected_row_index, 'continent'] = button_id
+            no_but_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
+            percent_complete = (len(tag_model_df) - len(no_but_model_df)) / len(tag_model_df)
             percent_complete *= 100
 
             # model_df.iloc[selected_row_id]['continent'] = button_id
             # print(type(model))
-            return button_id, no_but_model_df.to_dict(
-                'records'), selected_row_ids, percent_complete  # model_df.to_dict('records')
+            return button_id, no_but_model_df.to_dict('records'), selected_row_ids, percent_complete  # model_df.to_dict('records')
 
     # if selected_row_id != np.nan:
     #     print(model_df.iloc[selected_row_id])
@@ -78,7 +81,7 @@ def update_details(table_selected_rows, model):
     if len(table_selected_rows) == 1:
         if len(model) > 0:
             selected_row_index = model[table_selected_rows[0]]['index']
-            row = model_df.iloc[selected_row_index]
+            row = tag_model_df.iloc[selected_row_index]
             return row['country'], row['continent'], row['index']
     return no_update, no_update, no_update
 

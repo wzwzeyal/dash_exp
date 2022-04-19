@@ -3,7 +3,7 @@ from dash import html
 import pandas as pd
 from dash import Dash, dash_table
 
-from Data.data_frame import no_but_model_df
+from data.data_frame import tag_model_df
 
 # data_table_layout = html.Div(
 #     dbc.Table.from_dataframe(model_df, striped=True, bordered=True, hover=True)
@@ -24,8 +24,8 @@ data_table_layout = html.Div(
             value=50),
 
         dash_table.DataTable(
-            no_but_model_df.to_dict('records'),
-            [{"name": i, "id": i} for i in no_but_model_df.columns],
+            tag_model_df.to_dict('records'),
+            [{"name": i, "id": i} for i in tag_model_df.columns],
             id='model',
             filter_action='native',
             row_selectable="single",

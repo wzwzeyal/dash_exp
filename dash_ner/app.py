@@ -5,17 +5,15 @@
 import ast
 
 import dash_bootstrap_components as dbc
-from dash import State, ALL, no_update, callback_context, MATCH
-from dash_extensions.enrich import Output, DashProxy, Input, MultiplexerTransform
+from dash import State, ALL, no_update, callback_context, MATCH, Dash, Input, Output
 
 from Data.data_frame import ner_value
-from view.layout import create_layout
+from layout.main_layout import create_layout
 
-# app = Dash(
-#     __name__, )
-# # external_stylesheets=[dbc.themes.MINTY],)
-
-app = DashProxy(prevent_initial_callbacks=True, transforms=[MultiplexerTransform()])
+app = Dash(
+    __name__,
+)
+# external_stylesheets=[dbc.themes.MINTY],)
 
 app.layout = create_layout()
 
@@ -30,13 +28,11 @@ for count, color in enumerate(ner_value):
 
 
 @app.callback(
-    # Output('container', 'children'),
-    # Output({'type': 'button-container', 'index': MATCH}, 'style'),
     Output({'type': 'button-container', 'index': MATCH}, 'outline'),
     Input({'type': 'button-container', 'index': ALL}, 'n_clicks'),
     prevent_initial_call=True
 )
-def on_ner_text_click(values):
+def on_ner_text_click(_):
     print(f'[on_ner_text_click]: Start')
     global selected_indices_set
     ctx = callback_context
@@ -86,8 +82,8 @@ def on_ner_button_click(*args):
 
 @app.callback(
     Output('text-button-container', 'children'),
-    Input('model', 'active_cell'),
-    State('model', 'data'),
+    Input('text-data-table', 'active_cell'),
+    State('text-data-table', 'data'),
 )
 def on_active_cell(active_cell, data):
     print(f'[on_active_cell]: Start')
@@ -101,10 +97,12 @@ def on_active_cell(active_cell, data):
 
 def update_text_buttons(active_cell, data):
     print(f'[update_text_buttons]: Start')
-    text = data[active_cell['row']]['comment']
+    print(f'[update_text_buttons]: active_cell: {active_cell}')
+    text = data[active_cell['row_id']]['comment']
     split_text = text.split(' ')
     print(f'[update_text_buttons]: len(split_text): {len(split_text)}')
     children = []
+    print(f"[update_text_buttons]: type(data['row_id']), {type(data[active_cell['row_id']])}")
     for word, value in enumerate(split_text):
         new_button = dbc.Button(
             str(value),
@@ -118,7 +116,6 @@ def update_text_buttons(active_cell, data):
             className="me-1",
             outline=True,
 
-
             style={
                 "color": "black",
                 # "border": "2px solid #4CAF50",
@@ -128,6 +125,7 @@ def update_text_buttons(active_cell, data):
         )
         children.append(new_button)
 
+    # data['row_id']['state'] = children
     print(f'[update_text_buttons]: len(children): {len(children)}')
     print(f'[update_text_buttons]: End')
     return children

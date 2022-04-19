@@ -3,7 +3,7 @@ from dash import html
 import pandas as pd
 from dash import Dash, dash_table
 
-from Model.data_frame import no_but_model_df
+from Data.data_frame import no_but_model_df
 
 # data_table_layout = html.Div(
 #     dbc.Table.from_dataframe(model_df, striped=True, bordered=True, hover=True)

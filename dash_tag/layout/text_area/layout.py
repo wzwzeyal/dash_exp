@@ -8,15 +8,16 @@ text_area_layout = html.Div(
             id='left-textarea-example',
             value='left-textarea-example',
             readOnly=True,
-            style={'width': '45%', 'height': 100, 'margin-right': 5},
+            style={'width': '45%', 'height': 100, 'direction': 'rtl', 'margin-right': 5},
 
         ),
 
         dcc.Textarea(
             id='right-textarea-example',
+
             value='right-textarea-example',
             readOnly=True,
-            style={'width': '45%', 'height': 100},  # 'margin': '2%'},  # 'margin-left': "10%"},
+            style={'width': '45%', 'height': 100, 'direction': 'rtl'},  # 'margin': '2%'},  # 'margin-left': "10%"},
 
         ),
 

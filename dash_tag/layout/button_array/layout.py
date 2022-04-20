@@ -27,7 +27,11 @@ for count, item in enumerate(tag_button_names):
     # "margin-bottom": "1%", "margin-right": "1%"}))
 
 button_array_layout = html.Div(
-    lst
+    lst,
+    style=
+    {
+        "margin": 20
+    }
 )
 
 # button_array_layout = dbc.ButtonGroup(

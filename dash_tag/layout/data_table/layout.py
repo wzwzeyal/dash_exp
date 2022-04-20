@@ -6,80 +6,7 @@ from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-        html.Div(
-            [
-                # dbc.Alert(
-                #     f'Only {len(tag_model_df)} left, keep up the good work !',
-                #     id='table-status',
-                #     color='primary',
-                # ),
-
-                dbc.Alert(
-                    [
-                        "Untagged ",
-                        dbc.Badge(len(tag_model_df), id="badge", color="light", text_color="primary"),
-                    ],
-                    color="primary",
-                ),
-
-            ], style={
-                'display': 'flex',
-                'gap': 5,
-            }
-        ),
-
-        dbc.Progress(
-            id='tag-complete-progress',
-            value=0,
-        ),
-
-        html.Div(
-            [
-                html.Div(
-                    [
-                        dbc.RadioItems(
-                            id="page_size",
-                            className="btn-group",
-                            inputClassName="btn-check",
-                            labelClassName="btn btn-outline-primary",
-                            labelCheckedClassName="active",
-                            options=[
-                                {"label": "5", "value": 5},
-                                {"label": "10", "value": 10},
-                                {"label": "20", "value": 20},
-                            ],
-                            value=5,
-                        ),
-                    ],
-                    className="radio-group",
-                ),
-
-                html.Div(
-                    [
-                        dbc.RadioItems(
-                            id="filter-table",
-                            className="btn-group",
-                            inputClassName="btn-check",
-                            labelClassName="btn btn-outline-primary",
-                            labelCheckedClassName="active",
-                            options=[
-                                {"label": "Show Untagged", "value": 1},
-                                {"label": "Show All", "value": 2},
-                            ],
-                            value=1,
-                        ),
-                        html.Div(id="output"),
-                    ],
-                    className="radio-group",
-                ),
-
-            ], style={'display': 'flex', 'gap': 5}
-
-            # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/button_group/
-
-        ),
-
-        dash_table.DataTable(
+      dash_table.DataTable(
             tag_model_df.to_dict('records'),
             # [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
@@ -92,7 +19,7 @@ data_table_layout = html.Div(
                 dict(name='Left Text', id='comment'),
             ],
             page_current=0,
-            page_size=5,
+            page_size=1,
             page_action='native',
             style_table={
                 'height': "50%",

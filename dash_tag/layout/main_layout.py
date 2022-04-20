@@ -1,10 +1,12 @@
 from dash import html, dcc
 
-from layout.data_table.layout import data_table_layout
-from layout.header.layout import header_layout
-from layout.text_area.layout import text_area_layout
-from layout.button_array.layout import button_array_layout
-from layout.button_navig.layout import button_navig_layout
+from dash_tag.layout.data_table.layout import data_table_layout
+from dash_tag.layout.header.layout import header_layout
+from dash_tag.layout.text_area.layout import text_area_layout
+from dash_tag.layout.button_array.layout import button_array_layout
+from dash_tag.layout.button_navig.layout import button_navig_layout
+
+from dash_tag.layout.table_buttons.layout import table_buttons_layout
 
 
 def create_layout():
@@ -18,7 +20,7 @@ def create_layout():
 
             button_array_layout,
 
-            html.Br(),
+            table_buttons_layout,
 
             data_table_layout,
         ]

@@ -52,9 +52,10 @@ def on_btn_click(*arg):
     print(f'[on_btn_click]: selected_row_index: {selected_row_index}')
 
     if 'but' in button_id:
-        tag_model_df.at[selected_row_index, 'continent'] = button_id
+        tag_model_df.at[selected_row_index, 'tag'] = button_id
 
-    untagged_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
+    # print(f'[on_btn_click]: ')
+    untagged_model_df = tag_model_df[~tag_model_df['tag'].str.contains('but')]
     untagged_model_df['id'] = range(0, len(untagged_model_df))
 
     nof_tags_left = len(untagged_model_df)
@@ -94,10 +95,10 @@ def update_details(active_cell, data_table):
     print(f'[update_details]: Start')
 
     if len(data_table) == 0:
-        return "None", "None"
+        return "None", "None", "None"
 
     if active_cell is None:
-        return "None", "None"
+        return "None", "None", "None"
 
     print(f'[update_details]: active_cell {active_cell}')
 
@@ -110,8 +111,9 @@ def update_details(active_cell, data_table):
     # print(f'[update_details]: row_index {row_index}, row_id_index {row_id_index}')
 
     row_text = data_table[row_id]
+    print(f'[update_details]: row_text: {row_text}')
     print(f'[update_details]: End')
-    return row_text['country'], row_text['continent'], row_text['gdpPercap']
+    return row_text['comment'], row_text['reverse'], row_text['copy_text']
 
 
 if __name__ == '__main__':

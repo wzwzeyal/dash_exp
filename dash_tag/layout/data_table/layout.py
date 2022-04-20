@@ -46,8 +46,16 @@ data_table_layout = html.Div(
 
         dash_table.DataTable(
             tag_model_df.to_dict('records'),
-            [{"name": i, "id": i} for i in tag_model_df.columns],
+            # [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
+            columns=[
+                dict(name='Tag', id='tag'),
+                dict(name='Copy', id='copy_text'),
+                dict(name="random2", id="random2"),
+                dict(name="random1", id="random1"),
+                dict(name='Right Text', id='reverse'),
+                dict(name='Left Text', id='comment'),
+            ],
             page_current=0,
             page_size=5,
             page_action='native',

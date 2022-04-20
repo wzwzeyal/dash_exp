@@ -4,10 +4,6 @@ from dash import dcc, html
 button_navig_layout = html.Div(
     # button_navig_layout = dbc.Container(
     [
-        html.Span("Label 1", style={'margin-right': 10, 'borderStyle': 'groove'}),
-
-        html.Span("Label 2", style={'margin-right': 10, 'borderStyle': 'groove'}),
-
         html.Span(
             "My very own text to copy ",
             id="textarea_id",

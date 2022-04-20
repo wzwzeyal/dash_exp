@@ -86,6 +86,7 @@ def on_btn_click(*arg):
 @app.callback(
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
+    Output('textarea_id', 'children'),
     Input('records-data-table', 'active_cell'),  # -2
     Input('records-data-table', 'data'), prevent_initial_call=True  # -1
 )
@@ -110,7 +111,7 @@ def update_details(active_cell, data_table):
 
     row_text = data_table[row_id]
     print(f'[update_details]: End')
-    return row_text['country'], row_text['continent']
+    return row_text['country'], row_text['continent'], row_text['gdpPercap']
 
 
 if __name__ == '__main__':

@@ -13,8 +13,6 @@ button_navig_layout = html.Div(
             id="textarea_id",
             style={'margin-right': -2, 'borderStyle': 'groove'}),
 
-
-
         dcc.Clipboard(
             target_id="textarea_id",
             title="copy",

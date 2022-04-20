@@ -1,13 +1,13 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
+import dash_bootstrap_components as dbc
 # sudo kill $(sudo lsof -t -i:8050)
 from dash import Dash, Input, Output, State, no_update, callback_context
 
 from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-import dash_bootstrap_components as dbc
 
 app = Dash(
     __name__, )
@@ -19,15 +19,15 @@ tag_buttons_input = []
 for item in tag_button_names:
     tag_buttons_input.append(Input(item, 'n_clicks'))
 
+
 # show_only_tagged = False;
 
 
 @app.callback(Output('records-data-table', 'data'),
               Output('tag-complete-progress', 'value'),
-              Output('table-status', 'children'),
               Output('badge', 'children'),
               tag_buttons_input,
-              Input("radios", "value"), # -3
+              Input("filter-table", "value"),  # -3
               State('records-data-table', 'active_cell'),  # -2
               State('records-data-table', 'data'), prevent_initial_call=True  # -1
               )
@@ -36,7 +36,7 @@ def on_btn_click(*arg):
 
     data_table = arg[-1]
     active_cell = arg[-2]
-    show_all = arg[-3] == 1
+    show_all = arg[-3] == 2
 
     if len(data_table) == 0:
         return no_update
@@ -78,9 +78,9 @@ def on_btn_click(*arg):
     print(f'[on_btn_click]: End')
 
     if show_all:
-        return tag_model_df.to_dict('records'), percent_complete, alert, nof_tags_left
+        return tag_model_df.to_dict('records'), percent_complete, nof_tags_left
     else:
-        return untagged_model_df.to_dict('records'), percent_complete, alert, nof_tags_left
+        return untagged_model_df.to_dict('records'), percent_complete, nof_tags_left
 
 
 @app.callback(

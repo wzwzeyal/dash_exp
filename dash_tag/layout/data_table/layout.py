@@ -6,89 +6,77 @@ from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-        # html.Div(
-        #     id='table-status-div',
-        #     children=dbc.Alert(
-        #         f'Only {len(tag_model_df)} left, keep up the good work !',
-        #         id='table-status',
-        #         color='primary',
-        #         # children=html.Div(str(len(tag_model_df))),
-        #         # disabled=True,
-        #     ),
-        # ),
-        dbc.Row(
+        html.Div(
             [
-        dbc.Alert(
-            f'Only {len(tag_model_df)} left, keep up the good work !',
-            id='table-status',
-            color='primary',
-            style=
-            {
-                'height': '20px',
-                'width': '30%'
+                # dbc.Alert(
+                #     f'Only {len(tag_model_df)} left, keep up the good work !',
+                #     id='table-status',
+                #     color='primary',
+                # ),
+
+                dbc.Alert(
+                    [
+                        "Untagged ",
+                        dbc.Badge(len(tag_model_df), id="badge", color="light", text_color="primary"),
+                    ],
+                    color="primary",
+                ),
+
+            ], style={
+                'display': 'flex',
+                'gap': 5,
             }
-            # children=html.Div(str(len(tag_model_df))),
-            # disabled=True,
         ),
 
         dbc.Progress(
             id='tag-complete-progress',
             value=0,
-            style=
-            {
-                'width': '30%'
-            }
-        ),
-                ]),
-
-        dbc.Button(
-            [
-                "Notifications",
-                dbc.Badge("4", id="badge", color="light", text_color="primary", className="ms-1"),
-            ],
-            color="primary",
-        ),
-
-        html.Br(),
-
-        # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/button_group/
-        html.Div(
-            [
-                dbc.RadioItems(
-                    id="radios",
-                    className="btn-group",
-                    inputClassName="btn-check",
-                    labelClassName="btn btn-outline-primary",
-                    labelCheckedClassName="active",
-                    options=[
-                        {"label": "Show All", "value": 1},
-                        {"label": "Show Untagged", "value": 2},
-                    ],
-                    value=1,
-                ),
-                html.Div(id="output"),
-            ],
-            className="radio-group",
         ),
 
         html.Div(
             [
-                dbc.RadioItems(
-                    id="page_size",
-                    className="btn-group",
-                    inputClassName="btn-check",
-                    labelClassName="btn btn-outline-primary",
-                    labelCheckedClassName="active",
-                    options=[
-                        {"label": "5", "value": 5},
-                        {"label": "10", "value": 10},
-                        {"label": "20", "value": 20},
+                html.Div(
+                    [
+                        dbc.RadioItems(
+                            id="page_size",
+                            className="btn-group",
+                            inputClassName="btn-check",
+                            labelClassName="btn btn-outline-primary",
+                            labelCheckedClassName="active",
+                            options=[
+                                {"label": "5", "value": 5},
+                                {"label": "10", "value": 10},
+                                {"label": "20", "value": 20},
+                            ],
+                            value=5,
+                        ),
                     ],
-                    value=5,
+                    className="radio-group",
                 ),
-                # html.Div(id="output"),
-            ],
-            className="radio-group",
+
+                html.Div(
+                    [
+                        dbc.RadioItems(
+                            id="filter-table",
+                            className="btn-group",
+                            inputClassName="btn-check",
+                            labelClassName="btn btn-outline-primary",
+                            labelCheckedClassName="active",
+                            options=[
+                                {"label": "Show Untagged", "value": 1},
+                                {"label": "Show All", "value": 2},
+                            ],
+                            value=1,
+                        ),
+                        html.Div(id="output"),
+                    ],
+                    className="radio-group",
+                ),
+
+            ], style={'display': 'flex', 'gap': 5}
+
+            # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/button_group/
+
         ),
 
         dash_table.DataTable(

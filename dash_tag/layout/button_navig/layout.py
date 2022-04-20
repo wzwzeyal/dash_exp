@@ -2,7 +2,6 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 
 button_navig_layout = html.Div(
-    # button_navig_layout = dbc.Container(
     [
         html.Span(
             "My very own text to copy ",

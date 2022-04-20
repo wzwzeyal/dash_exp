@@ -1,14 +1,8 @@
 import dash_bootstrap_components as dbc
+from dash import dash_table
 from dash import html
-import pandas as pd
-from dash import Dash, dash_table
 
 from data.data_frame import tag_model_df
-
-# data_table_layout = html.Div(
-#     dbc.Table.from_dataframe(model_df, striped=True, bordered=True, hover=True)
-# )
-
 
 data_table_layout = html.Div(
     [
@@ -25,7 +19,30 @@ data_table_layout = html.Div(
 
         dbc.Progress(
             id='tag-complete-progress',
-            value=0),
+            value=0
+        ),
+
+        html.Br(),
+
+        # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/button_group/
+        html.Div(
+            [
+                dbc.RadioItems(
+                    id="radios",
+                    className="btn-group",
+                    inputClassName="btn-check",
+                    labelClassName="btn btn-outline-primary",
+                    labelCheckedClassName="active",
+                    options=[
+                        {"label": "Show All", "value": 1},
+                        {"label": "Show Untagged", "value": 2},
+                    ],
+                    value=1,
+                ),
+                html.Div(id="output"),
+            ],
+            className="radio-group",
+        ),
 
         dash_table.DataTable(
             tag_model_df.to_dict('records'),

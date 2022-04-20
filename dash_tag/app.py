@@ -19,23 +19,23 @@ tag_buttons_input = []
 for item in tag_button_names:
     tag_buttons_input.append(Input(item, 'n_clicks'))
 
-show_only_tagged = False;
+# show_only_tagged = False;
 
 
 @app.callback(Output('records-data-table', 'data'),
               Output('tag-complete-progress', 'value'),
               Output('table-status-div', 'children'),
               tag_buttons_input,
-              Input('show-all', 'n_clicks'),
-              Input('show-untagged', 'n_clicks'),
+              Input("radios", "value"), # -3
               State('records-data-table', 'active_cell'),  # -2
               State('records-data-table', 'data'), prevent_initial_call=True  # -1
               )
 def on_btn_click(*arg):
     print(f'[on_btn_click]: Start')
-    global show_only_tagged
+
     data_table = arg[-1]
     active_cell = arg[-2]
+    show_all = arg[-3] == 1
 
     if len(data_table) == 0:
         return no_update
@@ -48,11 +48,7 @@ def on_btn_click(*arg):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[on_btn_click]: button_id: {type(button_id)}')
 
-    if button_id == 'show-all':
-        show_only_tagged = False
-        return tag_model_df.to_dict('records'), no_update, no_update
-
-    selected_row_index = data_table[active_cell['row']]['tag_index']
+    selected_row_index = data_table[active_cell['row_id']]['tag_index']
     print(f'[on_btn_click]: selected_row_index: {selected_row_index}')
 
     if 'but' in button_id:
@@ -60,10 +56,6 @@ def on_btn_click(*arg):
 
     untagged_model_df = tag_model_df[~tag_model_df['continent'].str.contains('but')]
     untagged_model_df['id'] = range(0, len(untagged_model_df))
-
-    if button_id == 'show-untagged':
-        show_only_tagged = True
-        return untagged_model_df.to_dict('records'), no_update, no_update
 
     nof_tags_left = len(untagged_model_df)
     percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
@@ -83,10 +75,12 @@ def on_btn_click(*arg):
 
     print(f'[on_btn_click]: End')
 
-    if show_only_tagged:
+    if show_all:
         return tag_model_df.to_dict('records'), percent_complete, alert
     else:
         return untagged_model_df.to_dict('records'), percent_complete, alert
+
+
 
 
 @app.callback(

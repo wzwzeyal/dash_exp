@@ -44,6 +44,26 @@ data_table_layout = html.Div(
             className="radio-group",
         ),
 
+        html.Div(
+            [
+                dbc.RadioItems(
+                    id="page_size",
+                    className="btn-group",
+                    inputClassName="btn-check",
+                    labelClassName="btn btn-outline-primary",
+                    labelCheckedClassName="active",
+                    options=[
+                        {"label": "5", "value": 5},
+                        {"label": "10", "value": 10},
+                        {"label": "20", "value": 20},
+                    ],
+                    value=5,
+                ),
+                # html.Div(id="output"),
+            ],
+            className="radio-group",
+        ),
+
         dash_table.DataTable(
             tag_model_df.to_dict('records'),
             # [{"name": i, "id": i} for i in tag_model_df.columns],
@@ -61,7 +81,9 @@ data_table_layout = html.Div(
             page_action='native',
             style_table={
                 'height': "50%",
+                'overflow': 'scroll',
             },
+            filter_action='native',
             style_data={
                 'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
                 'overflow': 'hidden',
@@ -73,7 +95,7 @@ data_table_layout = html.Div(
     style=dict(
         width='100%',
         height='50%',
-        overflow='scroll',
+        overflow='scrollY',
         padding='10px 10px 10px 20px',
     )
 )

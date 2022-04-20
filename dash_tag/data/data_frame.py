@@ -12,7 +12,7 @@ def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
 
 tag_model_df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv')
 
-tag_model_df = pd.read_csv('./resources/test.tsv', sep='\t').head(100)
+tag_model_df = pd.read_csv('./resources/test.tsv', sep='\t')
 tag_model_df['tag'] = 'Untagged'
 tag_model_df['copy_text'] = range(100000, 100000 + len(tag_model_df))
 tag_model_df['reverse'] = tag_model_df.loc[:,'comment'].apply(lambda x: x[::-1])
@@ -27,6 +27,6 @@ tag_model_df['random2'] = pd.Series(random.choices(random2, k=len(tag_model_df))
 # tag_model_df['random2'] = np.array([id_generator() for i in range(len(tag_model_df))]).reshape(-1,1)
 
 tag_model_df['id'] = range(0, len(tag_model_df))
-tag_model_df = tag_model_df.head(13)
+tag_model_df = tag_model_df.head(500)
 tag_model_df['tag_index'] = range(0, len(tag_model_df))
 

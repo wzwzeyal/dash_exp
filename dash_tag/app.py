@@ -82,6 +82,12 @@ def on_btn_click(*arg):
         return untagged_model_df.to_dict('records'), percent_complete, alert
 
 
+@app.callback(
+    Output('records-data-table', 'page_size'),
+    Input('page_size', 'value'), prevent_initial_call=True  # -1
+)
+def update_page_size(page_size):
+    return page_size
 
 
 @app.callback(

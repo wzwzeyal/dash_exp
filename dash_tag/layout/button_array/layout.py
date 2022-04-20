@@ -17,7 +17,7 @@ for count, item in enumerate(tag_button_names):
             # },
             className="m-1",
             style={
-                "width": "70px",
+                # "width": "70px",
 
                 # "padding": "5px",
                 # "margin": "0.1%",

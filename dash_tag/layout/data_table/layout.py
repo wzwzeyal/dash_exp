@@ -6,20 +6,47 @@ from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-        html.Div(
-            id='table-status-div',
-            children=dbc.Alert(
-                f'Only {len(tag_model_df)} left, keep up the good work !',
-                id='table-status',
-                color='primary',
-                # children=html.Div(str(len(tag_model_df))),
-                # disabled=True,
-            ),
+        # html.Div(
+        #     id='table-status-div',
+        #     children=dbc.Alert(
+        #         f'Only {len(tag_model_df)} left, keep up the good work !',
+        #         id='table-status',
+        #         color='primary',
+        #         # children=html.Div(str(len(tag_model_df))),
+        #         # disabled=True,
+        #     ),
+        # ),
+        dbc.Row(
+            [
+        dbc.Alert(
+            f'Only {len(tag_model_df)} left, keep up the good work !',
+            id='table-status',
+            color='primary',
+            style=
+            {
+                'height': '20px',
+                'width': '30%'
+            }
+            # children=html.Div(str(len(tag_model_df))),
+            # disabled=True,
         ),
 
         dbc.Progress(
             id='tag-complete-progress',
-            value=0
+            value=0,
+            style=
+            {
+                'width': '30%'
+            }
+        ),
+                ]),
+
+        dbc.Button(
+            [
+                "Notifications",
+                dbc.Badge("4", id="badge", color="light", text_color="primary", className="ms-1"),
+            ],
+            color="primary",
         ),
 
         html.Br(),

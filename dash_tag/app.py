@@ -24,7 +24,8 @@ for item in tag_button_names:
 
 @app.callback(Output('records-data-table', 'data'),
               Output('tag-complete-progress', 'value'),
-              Output('table-status-div', 'children'),
+              Output('table-status', 'children'),
+              Output('badge', 'children'),
               tag_buttons_input,
               Input("radios", "value"), # -3
               State('records-data-table', 'active_cell'),  # -2
@@ -77,9 +78,9 @@ def on_btn_click(*arg):
     print(f'[on_btn_click]: End')
 
     if show_all:
-        return tag_model_df.to_dict('records'), percent_complete, alert
+        return tag_model_df.to_dict('records'), percent_complete, alert, nof_tags_left
     else:
-        return untagged_model_df.to_dict('records'), percent_complete, alert
+        return untagged_model_df.to_dict('records'), percent_complete, alert, nof_tags_left
 
 
 @app.callback(

@@ -31,7 +31,6 @@ data_table_layout = html.Div(
                 'textOverflow': 'ellipsis',
             }
         ),
-
     ],
     style=
     {
@@ -39,33 +38,4 @@ data_table_layout = html.Div(
         'margin': '10',
         # 'overflow-y': 'scroll',
     },
-    # style=dict(
-    #     width='98%',
-    #     margin=10,
-    #     # overflow-y: scroll
-    #     # height='50%',
-    #     # overflow='scrollY',
-    #     # padding='10px 10px 10px 20px',
-    # ),
 )
-
-# data_table_layout = dash_table.DataTable(
-#     # columns=[
-#     #     {'name': 'Continent', 'id': 'continent', 'type': 'numeric'},
-#     #     {'name': 'Country', 'id': 'country', 'type': 'text'},
-#     #     {'name': 'Population', 'id': 'pop', 'type': 'numeric'},
-#     #     {'name': 'Life Expectancy', 'id': 'lifeExp', 'type': 'numeric'},
-#     #     {'name': 'Mock Dates', 'id': 'Mock Date', 'type': 'datetime'}
-#     # ],
-#     data=model_df.to_dict('records'),
-#     filter_action='native',
-#
-#     style_table={
-#         'height': 400,
-#     },
-#     style_data={
-#         'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
-#         'overflow': 'hidden',
-#         'textOverflow': 'ellipsis',
-#     }
-# )

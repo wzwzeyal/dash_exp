@@ -79,6 +79,7 @@ table_buttons_layout = html.Div(
                     {
                         'height': 20,
                         'border': 'groove',
+                        'width': '98%'
                     }
                 ),
 

@@ -94,7 +94,7 @@ def update_page_size(page_size):
 @app.callback(
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
-    Output('textarea_id', 'children'),
+    Output('textarea_id', 'value'),
     Input('records-data-table', 'active_cell'),  # -2
     Input('records-data-table', 'data'), prevent_initial_call=True  # -1
 )
@@ -120,7 +120,7 @@ def update_details(active_cell, data_table):
     row_text = data_table[row_id]
     print(f'[update_details]: row_text: {row_text}')
     print(f'[update_details]: End')
-    return row_text['comment'], row_text['reverse'], row_text['copy_text']
+    return row_text['comment'], row_text['reverse'], str(row_text['copy_text'])
 
 
 if __name__ == '__main__':

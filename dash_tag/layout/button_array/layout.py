@@ -3,8 +3,6 @@ from dash import html
 
 from resources.strings import tag_button_names
 
-
-
 lst = []
 for count, item in enumerate(tag_button_names):
     lst.append(
@@ -15,12 +13,13 @@ for count, item in enumerate(tag_button_names):
             #     'type': 'push-button',  # used for the group matching
             #     'index': count,  # index-key, item-value
             # },
-            className="m-1",
+            # className="m-1",
             style={
-                # "width": "70px",
+                "width": "80px",
 
                 # "padding": "5px",
-                # "margin": "0.1%",
+                "margin-right": 5,
+                "margin-bottom": 3,
                 # "background-color": "white",
             }),
     )
@@ -30,7 +29,7 @@ button_array_layout = html.Div(
     lst,
     style=
     {
-        "margin": 20
+        "margin": 10
     }
 )
 

@@ -1,12 +1,11 @@
-import dash_bootstrap_components as dbc
 from dash import dash_table
 from dash import html
 
-from data.data_frame import tag_model_df
+from dash_tag.data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-      dash_table.DataTable(
+        dash_table.DataTable(
             tag_model_df.to_dict('records'),
             # [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
@@ -19,27 +18,35 @@ data_table_layout = html.Div(
                 dict(name='Left Text', id='comment'),
             ],
             page_current=0,
-            page_size=1,
+            page_size=100,
             page_action='native',
             style_table={
-                'height': "50%",
-                'overflow': 'scroll',
+                'height': '400px',
+                'overflowY': 'auto'
             },
             filter_action='native',
             style_data={
-                'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
+                'maxWidth': '150px',
                 'overflow': 'hidden',
                 'textOverflow': 'ellipsis',
             }
         ),
 
     ],
-    style=dict(
-        width='100%',
-        height='50%',
-        overflow='scrollY',
-        padding='10px 10px 10px 20px',
-    )
+    style=
+    {
+        'width': '98%',
+        'margin': '10',
+        # 'overflow-y': 'scroll',
+    },
+    # style=dict(
+    #     width='98%',
+    #     margin=10,
+    #     # overflow-y: scroll
+    #     # height='50%',
+    #     # overflow='scrollY',
+    #     # padding='10px 10px 10px 20px',
+    # ),
 )
 
 # data_table_layout = dash_table.DataTable(

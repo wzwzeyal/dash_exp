@@ -16,12 +16,12 @@ data_table_layout = html.Div(
             # [{"name": i, "id": i} for i in tag_model_df.columns],
             id='records-data-table',
             columns=[
-                dict(name='Tag', id='tag'),
-                dict(name='Copy', id='copy_text'),
-                dict(name="random2", id="random2"),
-                dict(name="random1", id="random1"),
-                dict(name='Right Text', id='reverse'),
-                dict(name='Left Text', id='comment'),
+                dict(name='Tag', id='tag',),
+                dict(name='Copy', id='copy_text',),
+                dict(name="random2", id="random2",),
+                dict(name="random1", id="random1",),
+                dict(name='Right Text', id='reverse',),
+                dict(name='Left Text', id='comment',),
             ],
             page_current=0,
             page_size=1,
@@ -30,18 +30,9 @@ data_table_layout = html.Div(
                 'max-height': '400px',
                 'overflowY': 'auto'
             },
-            sort_action='native',
-            filter_action='native',
-            # editable=True,
-            # dropdown=
-            # {
-            #     'tag': {
-            #         'options': [
-            #             {'label': i, 'value': i}
-            #             for i in tag_model_df['tag'].unique()
-            #         ]
-            #     },
-            # },
+            # sort_action='native',
+            # filter_action='native',
+            editable=True,
             style_data=
             {
                 'maxWidth': '150px',

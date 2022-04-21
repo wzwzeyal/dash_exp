@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 import pandas as pd
-from dash import Dash, Input, Output, State, no_update
+from dash import Dash, Input, Output, no_update
 from dash import dash_table
 from dash import html
 
@@ -31,7 +31,9 @@ app.layout = html.Div(
         dash_table.DataTable(
             id='records-data-table',
             data=df.to_dict('records'),
-            columns=[dict(name='Text', id='comment')],
+            columns=[
+                dict(name='Tag', id='tag', presentation='dropdown'),
+                dict(name='Text', id='comment')],
             # columns=[{'id': c, 'name': c} for c in df.columns],
             page_current=0,
             page_size=100,
@@ -40,6 +42,20 @@ app.layout = html.Div(
             style_data={
                 'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
                 'overflow': 'hidden',
+            },
+            editable=True,
+            dropdown=
+            {
+                'tag': {
+                    'options': [
+                        {'label': i, 'value': i}
+                        for i in [
+                            'Untagged',
+                            'Tag1',
+                            'Tag2',
+                        ]
+                    ]
+                },
             },
 
         ),

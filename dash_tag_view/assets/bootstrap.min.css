@@ -25,3 +25,7 @@
   border-bottom-left-radius: 0;
   margin-left: -1px;
 }
+
+.Select-menu-outer {
+display : block !important;
+}

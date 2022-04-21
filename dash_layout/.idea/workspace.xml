@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add br">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/data/data_frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/data/data_frame.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view/assets/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/assets/bootstrap.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/data_table/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/data_table/layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/table_buttons/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/table_buttons/layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,29 @@
     "settings.editor.selected.configurable": "reference.idesettings.debugger.python"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.app">
+    <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dash_layout" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="dash_tag_view" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -70,6 +93,15 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.app" />
+      <item itemvalue="Python.app (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.app (1)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -79,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650557044077</updated>
-      <workItem from="1650557045344" duration="4255000" />
+      <workItem from="1650557045344" duration="5906000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -102,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650558940144</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add br">
+      <created>1650562476936</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650562476936</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,6 +163,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="add br" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1650560668602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
+    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1650563916035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1650563767131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

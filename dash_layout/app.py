@@ -1,9 +1,14 @@
 import dash_bootstrap_components as dbc
-from dash import Dash
+import pandas as pd
+from dash import Dash, Input, Output, State, no_update
+from dash import dash_table
 from dash import html
 
 app = Dash(
     __name__, )
+
+df = pd.read_csv('../dash_tag/resources/test.tsv', sep='\t')
+df['id'] = df.index
 
 # app.layout = html.Div(
 #     [
@@ -18,11 +23,33 @@ app = Dash(
 
 app.layout = html.Div(
     [
+
+        dash_table.DataTable(
+            id='records-data-table',
+            data=df.to_dict('records'),
+            columns=[dict(name='Text', id='comment')],
+            # columns=[{'id': c, 'name': c} for c in df.columns],
+            page_current=0,
+            page_size=100,
+            page_action='native',
+            style_table={'height': '300px', 'overflowY': 'auto'},
+            style_data={
+                'width': '150px', 'minWidth': '150px', 'maxWidth': '150px',
+                'overflow': 'hidden',
+            },
+
+        ),
         dbc.Row(dbc.Col(html.Div("A single column"))),
         dbc.Row(
             [
-                dbc.Col(html.Div("One of three columns")),
-                dbc.Col(html.Div("One of three columns")),
+                dbc.Col(html.Div(
+                    "One of three columns",
+                    id="one",
+                )),
+                dbc.Col(html.Div(
+                    "Two of three columns"),
+                    id="two",
+                ),
                 dbc.Col(html.Div(
                     [
                         dbc.Progress(
@@ -34,6 +61,24 @@ app.layout = html.Div(
         ),
     ]
 )
+
+
+@app.callback(
+    Output('one', 'children'),
+    Output('two', 'children'),
+    Input('records-data-table', 'active_cell'),  # -2
+    State('records-data-table', 'derived_viewport_data')
+)
+def on_active_cell(active_cell, viewport_data):
+    if viewport_data is None:
+        return no_update
+
+    if active_cell is None:
+        return no_update
+
+    print(viewport_data[active_cell['row']])
+    return str(viewport_data[active_cell['row']]['comment']), str(len(viewport_data))
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

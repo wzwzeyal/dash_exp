@@ -24,6 +24,10 @@ df['id'] = df.index
 app.layout = html.Div(
     [
 
+        dbc.Button(
+            "Button",
+            id="change-table",
+        ),
         dash_table.DataTable(
             id='records-data-table',
             data=df.to_dict('records'),
@@ -39,7 +43,7 @@ app.layout = html.Div(
             },
 
         ),
-        dbc.Row(dbc.Col(html.Div("A single column"))),
+
         dbc.Row(
             [
                 dbc.Col(html.Div(
@@ -64,10 +68,19 @@ app.layout = html.Div(
 
 
 @app.callback(
+    Output('records-data-table', 'data'),
+    Input('change-table', 'n_clicks'),  # -2
+)
+def on_change_table(n_clicks):
+    df.at[0, "comment"] = str(n_clicks)
+    return df.to_dict('records')
+
+
+@app.callback(
     Output('one', 'children'),
     Output('two', 'children'),
-    Input('records-data-table', 'active_cell'),  # -2
-    State('records-data-table', 'derived_viewport_data')
+    Input('records-data-table', 'active_cell'),
+    Input('records-data-table', 'derived_viewport_data')
 )
 def on_active_cell(active_cell, viewport_data):
     if viewport_data is None:

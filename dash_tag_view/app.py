@@ -13,6 +13,9 @@ app = Dash(
     __name__, )
 # external_stylesheets=[dbc.themes.MINTY],)
 
+# app = DashProxy(prevent_initial_callbacks=True, transforms=[TriggerTransform(), GroupTransform()])
+
+
 app.layout = create_layout()
 
 tag_buttons_input = []
@@ -32,33 +35,40 @@ def on_page_size_change(page_size):
     print(f'[on_page_size_change]: End')
 
 
-
 @app.callback(
     Output('badge', 'children'),
+    Output('tag-complete-progress', 'value'),
     Input('records-data-table', 'data'),
 )
 def on_data_change(data):
     print(f'[on_data_change]: Start')
     nof_tags_left = len(tag_model_df[tag_model_df['tag'].str.contains("Untagged")])
+    percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
+    percent_complete *= 100
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
-    return nof_tags_left
-    
-    return  no_update
+    return nof_tags_left, percent_complete
+
 
 @app.callback(
     Output('records-data-table', 'data'),
     tag_buttons_input,
-    State('records-data-table', 'active_cell'),
+    Input('filter-table', 'value'),
+    State('records-data-table', 'active_cell'),  # -2
     State('records-data-table', 'derived_viewport_data')  # -1
 )
 def on_btn_click(*args):
     print(f'[on_btn_click]: Start')
     print(f'[on_btn_click]: args: {args}')
 
+    filter_table = args[-3]
     active_cell = args[-2]
     derived_viewport_data = args[-1]
     print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
+
+    ctx = callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    print(f'[on_btn_click]: button_id: {button_id}')
 
     if active_cell is None:
         print(f'[on_btn_click]: no_update, active_cell is None')
@@ -68,13 +78,16 @@ def on_btn_click(*args):
         print(f'[on_btn_click]: no_update, derived_viewport_data is None')
         return no_update
 
-    ctx = callback_context
-    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     handle_tag_button(active_cell, button_id, derived_viewport_data)
-    return tag_model_df.to_dict('records')
+
+    dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]
 
     print(f'[on_btn_click]: End')
-    return no_update
+
+    if filter_table == 2:
+        return tag_model_df.to_dict('records')
+    else:
+        return dff.to_dict('records')
 
 
 def handle_tag_button(active_cell, button_id, derived_viewport_data):
@@ -83,7 +96,8 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     row = active_cell['row']
     table_id = derived_viewport_data[row]['id']
     print(f'[on_btn_click]: table_id: {table_id}')
-    tag_model_df.at[table_id, 'tag'] = button_id
+    if 'but' in button_id:
+        tag_model_df.at[table_id, 'tag'] = button_id
     print(f'[handle_tag_button]: End')
 
 
@@ -92,7 +106,7 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     Output('right-textarea-example', 'value'),
     Output('textarea_id', 'value'),
     Input('records-data-table', 'active_cell'),
-    State('records-data-table', 'derived_viewport_data')
+    Input('records-data-table', 'derived_viewport_data')
 )
 def on_active_cell(active_cell, derived_viewport_data):
     print(f'[on_active_cell]: Start')
@@ -109,10 +123,14 @@ def on_active_cell(active_cell, derived_viewport_data):
         return no_update
 
     row = active_cell['row']
-    row_data = derived_viewport_data[row]
-    print(f'[on_active_cell]: row_data: {row_data}')
-    print(f'[on_active_cell]: End')
-    return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
+    if row < len(derived_viewport_data):
+        row_data = derived_viewport_data[row]
+        print(f'[on_active_cell]: row_data: {row_data}')
+        print(f'[on_active_cell]: End')
+        return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
+    else:
+        print(f'[on_active_cell]: error: row: {row}, {len(derived_viewport_data)}')
+        return no_update
 
 
 if __name__ == '__main__':

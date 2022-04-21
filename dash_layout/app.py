@@ -73,6 +73,7 @@ def on_active_cell(active_cell, viewport_data):
     if viewport_data is None:
         return no_update
 
+
     if active_cell is None:
         return no_update
 

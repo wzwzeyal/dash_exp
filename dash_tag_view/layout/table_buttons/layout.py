@@ -33,14 +33,13 @@ table_buttons_layout = html.Div(
                                     labelClassName="btn btn-outline-primary",
                                     labelCheckedClassName="active",
                                     options=[
-                                        {"label": "1", "value": 1},
-                                        {"label": "5", "value": 5},
-                                        {"label": "10", "value": 10},
+                                        {"label": "1", "value": "1"},
+                                        {"label": "5", "value": "5"},
+                                        {"label": "10", "value": "10"},
+                                        {"label": "50", "value": "50"},
+                                        {"label": "All", "value": "All"},
                                     ],
-                                    value=5,
-                                    style={
-                                        "align-self": "flex-end",
-                                    }
+                                    value="10",
                                 ),
                             ],
                             className="radio-group",
@@ -80,7 +79,7 @@ table_buttons_layout = html.Div(
                         {
                             'height': 20,
                             'border': 'groove',
-                            'width': '98%'
+                            'width': '90%'
                         }
                     ),
 

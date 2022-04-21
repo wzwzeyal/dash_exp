@@ -31,8 +31,11 @@ for item in tag_button_names:
 def on_page_size_change(page_size):
     print(f'[on_page_size_change]: Start')
     print(f'[on_page_size_change]: page_size: {page_size}')
-    return page_size
     print(f'[on_page_size_change]: End')
+    if page_size == 'All':
+        return len(tag_model_df)
+    return int(page_size)
+
 
 
 @app.callback(

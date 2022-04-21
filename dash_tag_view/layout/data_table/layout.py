@@ -21,9 +21,10 @@ data_table_layout = html.Div(
             page_size=1,
             page_action='native',
             style_table={
-                'height': '400px',
+                'max-height': '400px',
                 'overflowY': 'auto'
             },
+            sort_action='native',
             filter_action='native',
             style_data={
                 'maxWidth': '150px',
@@ -35,7 +36,7 @@ data_table_layout = html.Div(
     style=
     {
         'width': '98%',
-        'margin': '10',
+        # 'margin-left': '20',
         # 'overflow-y': 'scroll',
     },
 )

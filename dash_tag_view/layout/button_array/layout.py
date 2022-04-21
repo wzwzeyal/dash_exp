@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import html
 
-from dash_tag.resources.strings import tag_button_names
+from resources.strings import tag_button_names
 
 lst = []
 for count, item in enumerate(tag_button_names):

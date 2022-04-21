@@ -5,7 +5,7 @@
 from dash import Dash
 from dash import Input, Output, State, no_update, callback_context
 
-from dash_tag_view.data.data_frame import tag_model_df
+from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
 

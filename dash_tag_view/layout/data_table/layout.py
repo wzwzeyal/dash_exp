@@ -1,7 +1,7 @@
 from dash import dash_table
 from dash import html
 
-from dash_tag.data.data_frame import tag_model_df
+from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [

@@ -4,5 +4,8 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="dash_ner" />
+    <orderEntry type="module" module-name="dash_tag" />
+    <orderEntry type="module" module-name="dash_tag_view" />
   </component>
 </module>

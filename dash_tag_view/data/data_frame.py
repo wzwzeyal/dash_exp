@@ -3,6 +3,8 @@ import string
 
 import pandas as pd
 
+from resources.strings import tag_button_names
+
 random1 = ["ABC", "DEF", "GHI"]
 random2 = ["123456", "789012", "0987654"]
 
@@ -30,6 +32,7 @@ tag_model_df['reverse'] = tag_model_df.loc[:, 'comment'].apply(lambda x: x[::-1]
 
 tag_model_df['random1'] = pd.Series(random.choices(random1, k=len(tag_model_df)), index=tag_model_df.index)
 tag_model_df['random2'] = pd.Series(random.choices(random2, k=len(tag_model_df)), index=tag_model_df.index)
+# tag_model_df['tag'] = pd.Series(random.choices(tag_button_names, k=len(tag_model_df)), index=tag_model_df.index)
 
 # tag_model_df['random1'] = np.array([id_generator() for i in range(len(tag_model_df))]).reshape(-1,1)
 # tag_model_df['random2'] = np.array([id_generator() for i in range(len(tag_model_df))]).reshape(-1,1)

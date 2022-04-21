@@ -8,20 +8,6 @@ table_buttons_layout = html.Div(
         dbc.Row(
             [
                 dbc.Col(
-                    html.Div(
-                        dbc.Button(
-                            [
-                                "Untagged ",
-                                dbc.Badge(len(tag_model_df), id="badge", color="light", text_color="primary"),
-                            ],
-                            color="primary",
-                            active=False,
-                        ),
-                    ),
-                    width="auto",
-                    style={'margin-left': 10}
-                ),
-                dbc.Col(
 
                     [
                         html.Div(
@@ -43,6 +29,7 @@ table_buttons_layout = html.Div(
                                 ),
                             ],
                             className="radio-group",
+                            style={'margin-left': 10},
                         ),
 
                     ],
@@ -69,6 +56,21 @@ table_buttons_layout = html.Div(
                     ),
                     width="auto",
                 ),
+
+                dbc.Col(
+                    html.Div(
+                        dbc.Button(
+                            [
+                                "Untagged ",
+                                dbc.Badge(len(tag_model_df), id="badge", color="light", text_color="primary"),
+                            ],
+                            color="primary",
+                            active=False,
+                        ),
+                    ),
+                    width="auto",
+
+                ),
                 dbc.Col(
 
                     dbc.Progress(
@@ -79,7 +81,7 @@ table_buttons_layout = html.Div(
                         {
                             'height': 20,
                             'border': 'groove',
-                            'width': '90%'
+                            'width': '95%'
                         }
                     ),
 

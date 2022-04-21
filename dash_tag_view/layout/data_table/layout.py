@@ -5,6 +5,12 @@ from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
+        # html.Div(
+        #     style=
+        #     {
+        #         'width': 10,
+        #     }
+        # ),
         dash_table.DataTable(
             tag_model_df.to_dict('records'),
             # [{"name": i, "id": i} for i in tag_model_df.columns],
@@ -26,16 +32,29 @@ data_table_layout = html.Div(
             },
             sort_action='native',
             filter_action='native',
-            style_data={
+            # editable=True,
+            # dropdown=
+            # {
+            #     'tag': {
+            #         'options': [
+            #             {'label': i, 'value': i}
+            #             for i in tag_model_df['tag'].unique()
+            #         ]
+            #     },
+            # },
+            style_data=
+            {
                 'maxWidth': '150px',
                 'overflow': 'hidden',
                 'textOverflow': 'ellipsis',
-            }
+            },
+
         ),
     ],
     style=
     {
         'width': '98%',
+        # 'display': 'flex',
         # 'margin-left': '20',
         # 'overflow-y': 'scroll',
     },

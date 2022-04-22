@@ -4,15 +4,24 @@
 # sudo kill $(sudo lsof -t -i:8050)
 from dash import Dash
 from dash import Input, Output, State, no_update, callback_context
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-from data.data_frame import tag_model_df
+from data.data_frame import tag_model_df, postgres_db
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
 
-app = Dash(
-    __name__, )
+import pandas as pd
+
+server = Flask(__name__)
+
+app = Dash(__name__, server=server, suppress_callback_exceptions=True)
 # external_stylesheets=[dbc.themes.MINTY],)
 
+app.server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.server.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost/test"
+
+db = SQLAlchemy(app.server)
 # app = DashProxy(prevent_initial_callbacks=True, transforms=[TriggerTransform(), GroupTransform()])
 
 
@@ -35,7 +44,6 @@ def on_page_size_change(page_size):
     if page_size == 'All':
         return len(tag_model_df)
     return int(page_size)
-
 
 
 @app.callback(
@@ -94,6 +102,7 @@ def on_btn_click(*args):
 
 
 def handle_tag_button(active_cell, button_id, derived_viewport_data):
+    global postgres_conn
     print(f'[handle_tag_button]: Start')
     print(f'[on_btn_click]: button_id: {button_id}')
     row = active_cell['row']
@@ -101,6 +110,10 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     print(f'[on_btn_click]: table_id: {table_id}')
     if 'but' in button_id:
         tag_model_df.at[table_id, 'tag'] = button_id
+        postgres_conn = postgres_db.connect()
+        tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
+                            index=False)
+        postgres_conn.close()
     print(f'[handle_tag_button]: End')
 
 
@@ -135,6 +148,13 @@ def on_active_cell(active_cell, derived_viewport_data):
         print(f'[on_active_cell]: error: row: {row}, {len(derived_viewport_data)}')
         return no_update
 
+
+@app.callback(Output('postgres_datatable', 'children'),
+              [Input('interval_pg', 'n_intervals')])
+def populate_datatable(n_intervals):
+    df = pd.read_sql_table('test_tsv', con=db.engine)
+
+    return
 
 if __name__ == '__main__':
     app.run_server(debug=True)

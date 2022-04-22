@@ -1,16 +1,15 @@
-from dash import dash_table
+from dash import dash_table, dcc
 from dash import html
+
 
 from data.data_frame import tag_model_df
 
 data_table_layout = html.Div(
     [
-        # html.Div(
-        #     style=
-        #     {
-        #         'width': 10,
-        #     }
-        # ),
+        dcc.Interval(id='interval_pg', interval=86400000 * 7, n_intervals=0),
+        # activated once/week or when page refreshed
+        html.Div(id='postgres_datatable'),
+
         dash_table.DataTable(
             tag_model_df.to_dict('records'),
             # [{"name": i, "id": i} for i in tag_model_df.columns],

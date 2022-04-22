@@ -9,7 +9,14 @@ from sqlalchemy import create_engine
 def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
-predefined_csv=True
+predefined_csv=False
+
+from_postgres=True
+
+if from_postgres:
+    tag_model_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
+    tag_model_df['id'] = range(0, len(tag_model_df))
+    tag_model_df.set_index('id')
 
 if predefined_csv:
     random1 = ["ABC", "DEF", "GHI"]

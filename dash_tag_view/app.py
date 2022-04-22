@@ -1,16 +1,14 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
-import pandas as pd
 # sudo kill $(sudo lsof -t -i:8050)
 from dash import Dash, dash_table
 from dash import Input, Output, State, no_update, callback_context
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
+from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-from data.data_frame import tag_model_df
 
 server = Flask(__name__)
 
@@ -81,15 +79,12 @@ def on_btn_click(*args):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[on_btn_click]: button_id: {button_id}')
 
-    if active_cell is None:
-        print(f'[on_btn_click]: no_update, active_cell is None')
-        return no_update
-
     if derived_viewport_data is None:
         print(f'[on_btn_click]: no_update, derived_viewport_data is None')
         return no_update
 
-    handle_tag_button(active_cell, button_id, derived_viewport_data)
+    if active_cell is not None:
+        handle_tag_button(active_cell, button_id, derived_viewport_data)
 
     # dff = tag_model_df.copy()
     dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]

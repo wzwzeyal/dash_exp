@@ -1,17 +1,15 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
+import pandas as pd
 # sudo kill $(sudo lsof -t -i:8050)
-from dash import Dash
+from dash import Dash, dash_table
 from dash import Input, Output, State, no_update, callback_context
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from data.data_frame import tag_model_df, postgres_db
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-
-import pandas as pd
 
 server = Flask(__name__)
 
@@ -52,6 +50,7 @@ def on_page_size_change(page_size):
     Input('records-data-table', 'data'),
 )
 def on_data_change(data):
+    # return no_update
     print(f'[on_data_change]: Start')
     nof_tags_left = len(tag_model_df[tag_model_df['tag'].str.contains("Untagged")])
     percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
@@ -69,6 +68,7 @@ def on_data_change(data):
     State('records-data-table', 'derived_viewport_data')  # -1
 )
 def on_btn_click(*args):
+    global tag_model_df
     print(f'[on_btn_click]: Start')
     print(f'[on_btn_click]: args: {args}')
 
@@ -91,9 +91,11 @@ def on_btn_click(*args):
 
     handle_tag_button(active_cell, button_id, derived_viewport_data)
 
+    # dff = tag_model_df.copy()
     dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]
 
     print(f'[on_btn_click]: End')
+    # return  no_update
 
     if filter_table == 2:
         return tag_model_df.to_dict('records')
@@ -102,18 +104,20 @@ def on_btn_click(*args):
 
 
 def handle_tag_button(active_cell, button_id, derived_viewport_data):
-    global postgres_conn
+    global tag_model_df
     print(f'[handle_tag_button]: Start')
     print(f'[on_btn_click]: button_id: {button_id}')
     row = active_cell['row']
     table_id = derived_viewport_data[row]['id']
     print(f'[on_btn_click]: table_id: {table_id}')
     if 'but' in button_id:
+        # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
         tag_model_df.at[table_id, 'tag'] = button_id
-        postgres_conn = postgres_db.connect()
-        tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
-                            index=False)
-        postgres_conn.close()
+        tag_model_df.to_sql("test_tsv", con=db.engine, if_exists='replace', index=False)
+        # postgres_conn = postgres_db.connect()
+        # tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
+        #                     index=False)
+        # postgres_conn.close()
     print(f'[handle_tag_button]: End')
 
 
@@ -152,9 +156,42 @@ def on_active_cell(active_cell, derived_viewport_data):
 @app.callback(Output('postgres_datatable', 'children'),
               [Input('interval_pg', 'n_intervals')])
 def populate_datatable(n_intervals):
-    df = pd.read_sql_table('test_tsv', con=db.engine)
+    global tag_model_df
+    tag_model_df = pd.read_sql_table('test_tsv', con=db.engine)
 
-    return
+    return [
+        dash_table.DataTable(
+            tag_model_df.to_dict('records'),
+            # [{"name": i, "id": i} for i in tag_model_df.columns],
+            id='records-data-table',
+            columns=[
+                dict(name='Tag', id='tag', ),
+                dict(name='Copy', id='copy_text', ),
+                dict(name="random2", id="random2", ),
+                dict(name="random1", id="random1", ),
+                dict(name='Right Text', id='reverse', ),
+                dict(name='Left Text', id='comment', ),
+            ],
+            page_current=0,
+            page_size=1,
+            page_action='native',
+            style_table={
+                'max-height': '400px',
+                'overflowY': 'auto'
+            },
+            # sort_action='native',
+            # filter_action='native',
+            editable=True,
+            style_data=
+            {
+                'maxWidth': '150px',
+                'overflow': 'hidden',
+                'textOverflow': 'ellipsis',
+            },
+
+        ),
+    ]
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

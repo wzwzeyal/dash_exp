@@ -13,16 +13,16 @@ def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
 save_data_frame = False
 
 tag_model_df = pd.DataFrame()
-# print(f'[data]: : 1')
-conn_string = "postgresql://postgres:postgres@localhost/test"
-# print(f'[data]: : 2')
-postgres_db = create_engine(conn_string)
-# print(f'[data]: : 3')
-postgres_conn = postgres_db.connect()
-# print(f'[data]: : 4')
-tag_model_df = pd.read_sql_table('test_tsv', con=postgres_db.engine)
-# print(f'[data]: : 5')
-postgres_conn.close()
+# # print(f'[data]: : 1')
+# conn_string = "postgresql://postgres:postgres@localhost/test"
+# # print(f'[data]: : 2')
+# postgres_db = create_engine(conn_string)
+# # print(f'[data]: : 3')
+# postgres_conn = postgres_db.connect()
+# # print(f'[data]: : 4')
+# tag_model_df = pd.read_sql_table('test_tsv', con=postgres_db.engine)
+# # print(f'[data]: : 5')
+# postgres_conn.close()
 
 
 def save_dataframe():

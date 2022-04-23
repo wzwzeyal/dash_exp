@@ -87,6 +87,20 @@ def update_paged_table(*args):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[update_paged_table]: button_id: {button_id}')
 
+    use_filtered_text = False
+
+    if text_filter is not None:
+        if len(text_filter) > 0:
+            # https://www.geeksforgeeks.org/get-all-rows-in-a-pandas-dataframe-containing-given-substring/
+            filtered_df = tag_data_df[tag_data_df['tag'].str.contains(text_filter) |
+                                      tag_data_df['copy_text'].astype(str).str.contains(text_filter) |
+                                      tag_data_df['random2'].str.contains(text_filter) |
+                                      tag_data_df['random1'].str.contains(text_filter) |
+                                      tag_data_df['reverse'].str.contains(text_filter) |
+                                      tag_data_df['comment'].str.contains(text_filter) |
+                                      tag_data_df['tag_id'].astype(str).str.contains(text_filter)]
+            use_filtered_text = True
+
     if active_cell is not None:
         print(f'[update_paged_table]: active_cell: {active_cell}')
         # table_id = page_current * page_size +
@@ -99,33 +113,25 @@ def update_paged_table(*args):
             print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
             sql_update(button_id, tag_table_id)
 
-    filtered_df = tag_data_df.copy()
-
-    if text_filter is not None:
-        if len(text_filter) > 0:
-            # https://www.geeksforgeeks.org/get-all-rows-in-a-pandas-dataframe-containing-given-substring/
-            filtered_df = filtered_df[filtered_df['tag'].str.contains(text_filter) |
-                                      filtered_df['copy_text'].astype(str).str.contains(text_filter) |
-                                      filtered_df['random2'].str.contains(text_filter) |
-                                      filtered_df['random1'].str.contains(text_filter) |
-                                      filtered_df['reverse'].str.contains(text_filter) |
-                                      filtered_df['comment'].str.contains(text_filter) |
-                                      filtered_df['tag_id'].astype(str).str.contains(text_filter)]
-
     if filter_table == 1:
         # Only Untagged
-        untagged_df = filtered_df[tag_data_df['tag'].str.contains('Untagged')]
-
-        if (page_size == 'All'):
-            res = untagged_df.copy()
+        if use_filtered_text:
+            untagged_df = filtered_df[tag_data_df['tag'].str.contains('Untagged')]
         else:
-            res = untagged_df.iloc[
-                  page_current * page_size:(page_current + 1) * page_size
-                  ]
-    else:
-        res = filtered_df.iloc[
+            untagged_df = tag_data_df[tag_data_df['tag'].str.contains('Untagged')]
+
+        res = untagged_df.iloc[
               page_current * page_size:(page_current + 1) * page_size
               ]
+    else:
+        if use_filtered_text:
+            res = filtered_df.iloc[
+                  page_current * page_size:(page_current + 1) * page_size
+                  ]
+        else:
+            res = tag_data_df.iloc[
+                  page_current * page_size:(page_current + 1) * page_size
+                  ]
 
     # dict(name='Tag', id='tag', ),
     # dict(name='Copy', id='copy_text', ),

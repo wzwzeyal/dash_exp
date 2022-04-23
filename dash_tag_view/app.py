@@ -9,6 +9,9 @@ from flask import Flask
 from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
+from sqlalchemy import create_engine
+
+engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=False)
 
 server = Flask(__name__)
 
@@ -64,7 +67,7 @@ def on_data_change(data):
     tag_buttons_input,
     Input('filter-table', 'value'),
     State('records-data-table', 'active_cell'),  # -2
-    State('records-data-table', 'derived_viewport_data')  # -1
+    Input('records-data-table', 'derived_viewport_data')  # -1
 )
 def on_btn_click(*args):
     print(f'[on_btn_click]: Start')
@@ -73,7 +76,7 @@ def on_btn_click(*args):
     filter_table = args[-3]
     active_cell = args[-2]
     derived_viewport_data = args[-1]
-    print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
+    # print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -107,7 +110,10 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     if 'but' in button_id:
         # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
         tag_model_df.at[table_id, 'tag'] = button_id
-        # tag_model_df.to_sql("test_tsv", con=db.engine, if_exists='replace', index=False)
+
+        with engine.begin() as connection:
+            tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace')
+
         # postgres_conn = postgres_db.connect()
         # tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
         #                     index=False)
@@ -175,7 +181,7 @@ def populate_datatable(n_intervals):
             },
             # sort_action='native',
             # filter_action='native',
-            editable=True,
+            # editable=True,
             style_data=
             {
                 'maxWidth': '150px',

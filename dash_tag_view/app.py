@@ -98,23 +98,37 @@ def update_paged_table(*args):
             print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
             sql_update(button_id, tag_table_id)
 
+    filtered_df = tag_data_df.copy()
+
+    if text_filter is not None:
+        if len(text_filter) > 0:
+            # https://www.geeksforgeeks.org/get-all-rows-in-a-pandas-dataframe-containing-given-substring/
+            filtered_df = filtered_df[filtered_df['tag'].str.contains(text_filter) |
+                                      filtered_df['copy_text'].astype(str).str.contains(text_filter) |
+                                      filtered_df['random2'].str.contains(text_filter) |
+                                      filtered_df['random1'].str.contains(text_filter) |
+                                      filtered_df['reverse'].str.contains(text_filter) |
+                                      filtered_df['comment'].str.contains(text_filter) |
+                                      filtered_df['tag_id'].astype(str).str.contains(text_filter)]
+
     if filter_table == 1:
         # Only Untagged
-        untagged_df = tag_data_df[tag_data_df['tag'].str.contains('Untagged')]
+        untagged_df = filtered_df[tag_data_df['tag'].str.contains('Untagged')]
         res = untagged_df.iloc[
               page_current * page_size:(page_current + 1) * page_size
               ]
     else:
-        res = tag_data_df.iloc[
+        res = filtered_df.iloc[
               page_current * page_size:(page_current + 1) * page_size
               ]
 
-    if text_filter is not None:
-        if len(text_filter) > 0:
-            # # df = dff[dff['comment'].isin([text_filter])]
-            # df = dff.filter(like=text_filter, axis=0)
-            # df = dff.columns.to_series().str.contains(text_filter)
-            res = res[res['comment'].str.contains(text_filter)]
+    # dict(name='Tag', id='tag', ),
+    # dict(name='Copy', id='copy_text', ),
+    # dict(name="random2", id="random2", ),
+    # dict(name="random1", id="random1", ),
+    # dict(name='Right Text', id='reverse', ),
+    # dict(name='Left Text', id='comment'),
+    # dict(name='Tag Id', id='tag_id'),
 
     return res.to_dict('records')
 

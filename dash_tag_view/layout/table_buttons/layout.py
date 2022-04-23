@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import html
+from dash import html, dcc
 
 from data.data_frame import tag_model_df
 
@@ -70,6 +70,16 @@ table_buttons_layout = html.Div(
                     ),
                     width="auto",
 
+                ),
+                dbc.Col(
+                    dcc.Input(
+                        id='text-filter',
+                        type='text',
+                        debounce=False,
+                        placeholder="Search for text",
+
+                    ),
+                    width="auto",
                 ),
                 dbc.Col(
 

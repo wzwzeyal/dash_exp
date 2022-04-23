@@ -5,11 +5,11 @@
 from dash import Dash, dash_table
 from dash import Input, Output, State, no_update, callback_context
 from flask import Flask
+from sqlalchemy import create_engine, text
 
 from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-from sqlalchemy import create_engine, text
 
 engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=False)
 
@@ -65,7 +65,8 @@ def on_data_change(data):
 @app.callback(
     Output('records-data-table', 'data'),
     tag_buttons_input,
-    Input('filter-table', 'value'),
+    Input('text-filter', 'value'),  # -4
+    Input('filter-table', 'value'),  # -3
     State('records-data-table', 'active_cell'),  # -2
     Input('records-data-table', 'derived_viewport_data')  # -1
 )
@@ -73,9 +74,12 @@ def on_btn_click(*args):
     print(f'[on_btn_click]: Start')
     print(f'[on_btn_click]: args: {args}')
 
+    text_filter = args[-4]
     filter_table = args[-3]
     active_cell = args[-2]
     derived_viewport_data = args[-1]
+
+    print(f'[on_btn_click]: text_filter: {text_filter}')
     # print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
 
     ctx = callback_context
@@ -95,6 +99,21 @@ def on_btn_click(*args):
     print(f'[on_btn_click]: End')
     # return  no_update
 
+    # if text_filter is not None:
+    #     if len(text_filter) > 0:
+    #         # df = dff[dff['comment'].isin([text_filter])]
+    #         df = dff.filter(like=text_filter, axis=0)
+    #         df = dff.columns.to_series().str.contains(text_filter)
+    #         df = dff[dff['comment'].str.contains(text_filter)]
+    #         # df = dff[dff..str.contains(text_filter)]
+    #         return df.to_dict('records')
+
+    # # identify partial string to look for
+    # keep = ["Wes"]
+    #
+    # # filter for rows that contain the partial string "Wes" in the conference column
+    # df[df.conference.str.contains('|'.join(keep))]
+
     if filter_table == 2:
         return tag_model_df.to_dict('records')
     else:
@@ -111,8 +130,7 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
         # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
         tag_model_df.at[table_id, 'tag'] = button_id
 
-        sql_update(button_id, table_id)
-
+        # sql_update(button_id, table_id)
 
         # with engine.begin() as connection:
         #     tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace')
@@ -161,10 +179,14 @@ def on_active_cell(active_cell, derived_viewport_data):
         print(f'[on_active_cell]: no_update, derived_viewport_data is NONE')
         return no_update
 
+
+
     row = active_cell['row']
+
     if row < len(derived_viewport_data):
         row_data = derived_viewport_data[row]
         print(f'[on_active_cell]: row_data: {row_data}')
+        print(f"[on_active_cell]: tag_id: {row_data['tag_id']}")
         print(f'[on_active_cell]: End')
         return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
     else:

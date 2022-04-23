@@ -44,7 +44,7 @@ print(tag_data_df.head(10)[['index', 'tag_id']])
 data_table_layout = html.Div(
     [
         dash_table.DataTable(
-            tag_data_df.to_dict('records'),
+            tag_data_df.head(10).to_dict('records'),
             # [{"name": i, "id": i} for i in tag_data_df.columns],
             id='records-data-table',
             columns=[

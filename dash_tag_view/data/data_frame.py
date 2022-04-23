@@ -11,10 +11,19 @@ def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
 
 predefined_csv = False
 
-from_postgres = ~predefined_csv
+from_postgres = True
 
 if from_postgres:
     tag_model_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
+
+    print(tag_model_df.columns)
+    tag_model_df.set_index('id')
+    tag_model_df.sort_values(by='id', inplace=True)
+    print(f'[]: tag_model_df.columns: {tag_model_df.info()}')
+
+    print(f'[]: tag_model_df.at(0, "tag"): {tag_model_df.at[0, "tag"]}')
+    tag_model_df.at[0, "tag"] = "Untagged"
+    print(f'[]: tag_model_df.at(0, "tag"): {tag_model_df.at[0, "tag"]}')
     # tag_model_df.set_index('id')
 
 if predefined_csv:
@@ -28,7 +37,6 @@ if predefined_csv:
          lkjhlkjh lkjh kjh lkjh kljh ljkhlkj lkjh lkjh lkjh lkjh lkjh lkhj lkjh lkhl"
     tag_model_df['tag'] = 'Untagged'
     tag_model_df['id'] = range(0, len(tag_model_df))
-    tag_model_df['tag_id'] = range(0, len(tag_model_df))
     tag_model_df['copy_text'] = range(100000, 100000 + len(tag_model_df))
     tag_model_df['reverse'] = tag_model_df.loc[:, 'comment'].apply(lambda x: x[::-1])
     # https://stackoverflow.com/questions/65982695/insert-a-new-column-in-pandas-with-random-string-values

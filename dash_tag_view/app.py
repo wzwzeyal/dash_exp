@@ -2,8 +2,8 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 # sudo kill $(sudo lsof -t -i:8050)
-from dash import Dash, dash_table
-from dash import Input, Output, State, no_update, callback_context
+from dash import Dash
+from dash import Input, Output, no_update, callback_context, State
 from flask import Flask
 from sqlalchemy import create_engine, text
 
@@ -15,7 +15,7 @@ engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=Fal
 
 server = Flask(__name__)
 
-app = Dash(__name__, server=server, suppress_callback_exceptions=True)
+app = Dash(__name__, server=server, suppress_callback_exceptions=False)
 # external_stylesheets=[dbc.themes.MINTY],)
 
 app.server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -65,59 +65,116 @@ def on_data_change(data):
 @app.callback(
     Output('records-data-table', 'data'),
     tag_buttons_input,
-    Input('text-filter', 'value'),  # -4
-    Input('filter-table', 'value'),  # -3
-    State('records-data-table', 'active_cell'),  # -2
-    Input('records-data-table', 'derived_viewport_data')  # -1
+    State('records-data-table', 'derived_viewport_data'), # -5
+    State('filter-table', 'value'),  # -4
+    State('records-data-table', 'active_cell'),  # -3
+    Input('records-data-table', "page_current"),  # -2
+    Input('records-data-table', "page_size"),  # -1
 )
-def on_btn_click(*args):
-    print(f'[on_btn_click]: Start')
-    print(f'[on_btn_click]: args: {args}')
+def update_paged_table(*args):
+    print(f'[update_paged_table]: Start')
 
-    text_filter = args[-4]
-    filter_table = args[-3]
-    active_cell = args[-2]
-    derived_viewport_data = args[-1]
-
-    print(f'[on_btn_click]: text_filter: {text_filter}')
-    # print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
+    page_size = args[-1]
+    page_current = args[-2]
+    active_cell = args[-3]
+    filter_table = args[-4]
+    derived_viewport_data = args[-5]
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print(f'[on_btn_click]: button_id: {button_id}')
+    print(f'[update_paged_table]: button_id: {button_id}')
 
-    if derived_viewport_data is None:
-        print(f'[on_btn_click]: no_update, derived_viewport_data is None')
-        return no_update
+    # if filter_table == 1:
+    #     # Only Untagged
+    #     untagged_df = tag_model_df[tag_model_df['tag'].str.contains('Untagged')]
+    #     derived_viewport_data = untagged_df.iloc[
+    #                             page_current * page_size:(page_current + 1) * page_size
+    #                             ]
+    # else:
 
     if active_cell is not None:
-        handle_tag_button(active_cell, button_id, derived_viewport_data)
+        print(f'[update_paged_table]: active_cell: {active_cell}')
+        # table_id = page_current * page_size +
+        if 'but' in button_id:
+            row = active_cell['row_id']
+            tag_table_id = derived_viewport_data[row]['id']
+            print(f'[update_paged_table]: tag_table_id: {tag_table_id}')
+            print(f"[update_paged_table]: before : {tag_model_df.at[tag_table_id, 'tag']}")
+            tag_model_df.at[tag_table_id, 'tag'] = button_id
+            print(f"[update_paged_table]: before : {tag_model_df.at[tag_table_id, 'tag']}")
 
-    # dff = tag_model_df.copy()
-    dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]
-
-    print(f'[on_btn_click]: End')
-    # return  no_update
-
-    # if text_filter is not None:
-    #     if len(text_filter) > 0:
-    #         # df = dff[dff['comment'].isin([text_filter])]
-    #         df = dff.filter(like=text_filter, axis=0)
-    #         df = dff.columns.to_series().str.contains(text_filter)
-    #         df = dff[dff['comment'].str.contains(text_filter)]
-    #         # df = dff[dff..str.contains(text_filter)]
-    #         return df.to_dict('records')
-
-    # # identify partial string to look for
-    # keep = ["Wes"]
-    #
-    # # filter for rows that contain the partial string "Wes" in the conference column
-    # df[df.conference.str.contains('|'.join(keep))]
-
-    if filter_table == 2:
-        return tag_model_df.to_dict('records')
+    if filter_table == 1:
+        # Only Untagged
+        untagged_df = tag_model_df[tag_model_df['tag'].str.contains('Untagged')]
+        res = untagged_df.iloc[
+                                page_current * page_size:(page_current + 1) * page_size
+                                ]
     else:
-        return dff.to_dict('records')
+        res = tag_model_df.iloc[
+                            page_current * page_size:(page_current + 1) * page_size
+                            ]
+        
+    print(f'[update_paged_table]: res[0]: {res.iloc[0]}')
+
+    return res.to_dict('records')
+
+
+# @app.callback(
+#     Output('records-data-table', 'data'),
+#     tag_buttons_input,
+#     Input('text-filter', 'value'),  # -4
+#     Input('filter-table', 'value'),  # -3
+#     State('records-data-table', 'active_cell'),  # -2
+#     State('records-data-table', 'derived_viewport_data')  # -1
+# )
+# def on_btn_click(*args):
+#     print(f'[on_btn_click]: Start')
+#     print(f'[on_btn_click]: args: {args}')
+#
+#     text_filter = args[-4]
+#     filter_table = args[-3]
+#     active_cell = args[-2]
+#     derived_viewport_data = args[-1]
+#
+#     print(f'[on_btn_click]: text_filter: {text_filter}')
+#     # print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
+#
+#     ctx = callback_context
+#     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+#     print(f'[on_btn_click]: button_id: {button_id}')
+#
+#     if derived_viewport_data is None:
+#         print(f'[on_btn_click]: no_update, derived_viewport_data is None')
+#         return no_update
+#
+#     if active_cell is not None:
+#         handle_tag_button(active_cell, button_id, derived_viewport_data)
+#
+#     # dff = tag_model_df.copy()
+#     dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]
+#
+#     print(f'[on_btn_click]: End')
+#     # return  no_update
+#
+#     # if text_filter is not None:
+#     #     if len(text_filter) > 0:
+#     #         # df = dff[dff['comment'].isin([text_filter])]
+#     #         df = dff.filter(like=text_filter, axis=0)
+#     #         df = dff.columns.to_series().str.contains(text_filter)
+#     #         df = dff[dff['comment'].str.contains(text_filter)]
+#     #         # df = dff[dff..str.contains(text_filter)]
+#     #         return df.to_dict('records')
+#
+#     # # identify partial string to look for
+#     # keep = ["Wes"]
+#     #
+#     # # filter for rows that contain the partial string "Wes" in the conference column
+#     # df[df.conference.str.contains('|'.join(keep))]
+#
+#     if filter_table == 2:
+#         return tag_model_df.to_dict('records')
+#     else:
+#         return dff.to_dict('records')
 
 
 def handle_tag_button(active_cell, button_id, derived_viewport_data):
@@ -179,59 +236,17 @@ def on_active_cell(active_cell, derived_viewport_data):
         print(f'[on_active_cell]: no_update, derived_viewport_data is NONE')
         return no_update
 
-
-
     row = active_cell['row']
 
     if row < len(derived_viewport_data):
         row_data = derived_viewport_data[row]
         print(f'[on_active_cell]: row_data: {row_data}')
-        print(f"[on_active_cell]: tag_id: {row_data['tag_id']}")
+        print(f"[on_active_cell]: row_data[id]: {row_data['id']}")
         print(f'[on_active_cell]: End')
         return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
     else:
         print(f'[on_active_cell]: error: row: {row}, {len(derived_viewport_data)}')
         return no_update
-
-
-@app.callback(Output('postgres_datatable', 'children'),
-              [Input('interval_pg', 'n_intervals')])
-def populate_datatable(n_intervals):
-    # global tag_model_df
-    # tag_model_df = pd.read_sql_table('test_tsv', con=db.engine)
-
-    return [
-        dash_table.DataTable(
-            tag_model_df.to_dict('records'),
-            # [{"name": i, "id": i} for i in tag_model_df.columns],
-            id='records-data-table',
-            columns=[
-                dict(name='Tag', id='tag', ),
-                dict(name='Copy', id='copy_text', ),
-                dict(name="random2", id="random2", ),
-                dict(name="random1", id="random1", ),
-                dict(name='Right Text', id='reverse', ),
-                dict(name='Left Text', id='comment', ),
-            ],
-            page_current=0,
-            page_size=1,
-            page_action='native',
-            style_table={
-                'max-height': '400px',
-                'overflowY': 'auto'
-            },
-            # sort_action='native',
-            # filter_action='native',
-            # editable=True,
-            style_data=
-            {
-                'maxWidth': '150px',
-                'overflow': 'hidden',
-                'textOverflow': 'ellipsis',
-            },
-
-        ),
-    ]
 
 
 if __name__ == '__main__':

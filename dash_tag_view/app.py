@@ -10,7 +10,6 @@ from sqlalchemy import create_engine, text
 from layout.data_table.layout import tag_data_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-import pandas as pd
 
 engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
 
@@ -65,7 +64,8 @@ def on_data_change(data):
 @app.callback(
     Output('records-data-table', 'data'),
     tag_buttons_input,
-    State('records-data-table', 'derived_viewport_data'), # -5
+    Input('text-filter', 'value'),
+    State('records-data-table', 'derived_viewport_data'),  # -5
     Input('filter-table', 'value'),  # -4
     State('records-data-table', 'active_cell'),  # -3
     Input('records-data-table', "page_current"),  # -2
@@ -79,19 +79,12 @@ def update_paged_table(*args):
     active_cell = args[-3]
     filter_table = args[-4]
     derived_viewport_data = args[-5]
+    text_filter = args[-6]
     print(f'[update_paged_table]: derived_viewport_data: {derived_viewport_data}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     print(f'[update_paged_table]: button_id: {button_id}')
-
-    # if filter_table == 1:
-    #     # Only Untagged
-    #     untagged_df = tag_model_df[tag_model_df['tag'].str.contains('Untagged')]
-    #     derived_viewport_data = untagged_df.iloc[
-    #                             page_current * page_size:(page_current + 1) * page_size
-    #                             ]
-    # else:
 
     if active_cell is not None:
         print(f'[update_paged_table]: active_cell: {active_cell}')
@@ -103,23 +96,25 @@ def update_paged_table(*args):
             print(f"[update_paged_table]: before : {tag_data_df.at[tag_table_id, 'tag']}")
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
-            # engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
-            # with engine.begin() as connection:
-            #     tag_data_df.to_sql('test_tsv', con=connection, if_exists='replace')
             sql_update(button_id, tag_table_id)
 
     if filter_table == 1:
         # Only Untagged
         untagged_df = tag_data_df[tag_data_df['tag'].str.contains('Untagged')]
         res = untagged_df.iloc[
-                                page_current * page_size:(page_current + 1) * page_size
-                                ]
+              page_current * page_size:(page_current + 1) * page_size
+              ]
     else:
         res = tag_data_df.iloc[
-                            page_current * page_size:(page_current + 1) * page_size
-                            ]
-        
-    print(f'[update_paged_table]: res[0]: {res.iloc[0]}')
+              page_current * page_size:(page_current + 1) * page_size
+              ]
+
+    if text_filter is not None:
+        if len(text_filter) > 0:
+            # # df = dff[dff['comment'].isin([text_filter])]
+            # df = dff.filter(like=text_filter, axis=0)
+            # df = dff.columns.to_series().str.contains(text_filter)
+            res = res[res['comment'].str.contains(text_filter)]
 
     return res.to_dict('records')
 

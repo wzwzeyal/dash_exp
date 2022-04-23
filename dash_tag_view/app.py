@@ -80,7 +80,8 @@ def update_paged_table(*args):
     filter_table = args[-4]
     derived_viewport_data = args[-5]
     text_filter = args[-6]
-    print(f'[update_paged_table]: derived_viewport_data: {derived_viewport_data}')
+    print(f'[update_paged_table]: page_size: {page_size}')
+    # print(f'[update_paged_table]: derived_viewport_data: {derived_viewport_data}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -114,9 +115,13 @@ def update_paged_table(*args):
     if filter_table == 1:
         # Only Untagged
         untagged_df = filtered_df[tag_data_df['tag'].str.contains('Untagged')]
-        res = untagged_df.iloc[
-              page_current * page_size:(page_current + 1) * page_size
-              ]
+
+        if (page_size == 'All'):
+            res = untagged_df.copy()
+        else:
+            res = untagged_df.iloc[
+                  page_current * page_size:(page_current + 1) * page_size
+                  ]
     else:
         res = filtered_df.iloc[
               page_current * page_size:(page_current + 1) * page_size

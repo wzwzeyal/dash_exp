@@ -9,7 +9,7 @@ from flask import Flask
 from data.data_frame import tag_model_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=False)
 
@@ -105,20 +105,39 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     print(f'[handle_tag_button]: Start')
     print(f'[on_btn_click]: button_id: {button_id}')
     row = active_cell['row']
-    table_id = derived_viewport_data[row]['id']
+    table_id = derived_viewport_data[row]['tag_id']
     print(f'[on_btn_click]: table_id: {table_id}')
     if 'but' in button_id:
         # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
         tag_model_df.at[table_id, 'tag'] = button_id
 
-        with engine.begin() as connection:
-            tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace')
+        sql_update(button_id, table_id)
+
+
+        # with engine.begin() as connection:
+        #     tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace')
 
         # postgres_conn = postgres_db.connect()
         # tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
         #                     index=False)
         # postgres_conn.close()
     print(f'[handle_tag_button]: End')
+
+
+def sql_update(button_id, table_id):
+    print(f'[sql_update]: Start')
+    with engine.begin() as connection:
+        tbl_name = 'test_tsv'
+        col_name = 'tag'
+        new_val = str(button_id)
+        col_id_name = 'id'
+        sql_str = f"UPDATE {tbl_name} set {col_name} = '{new_val}'\
+            WHERE {col_id_name} = {table_id}"
+        print(f'[sql_update]: sql_str: {sql_str}')
+        print(f'[sql_update]: text(sql_str): {text(sql_str)}')
+        res = connection.execute(text(sql_str))
+        print(f'[sql_update]: res: {res}')
+    print(f'[sql_update]: End')
 
 
 @app.callback(

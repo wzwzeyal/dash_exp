@@ -11,12 +11,11 @@ def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
 
 predefined_csv = False
 
-from_postgres = True
+from_postgres = ~predefined_csv
 
 if from_postgres:
     tag_model_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
-    print(tag_model_df.head(1))
-    tag_model_df.set_index('id')
+    # tag_model_df.set_index('id')
 
 if predefined_csv:
     random1 = ["ABC", "DEF", "GHI"]
@@ -28,6 +27,8 @@ if predefined_csv:
         "hkjh lkjh lkjh lkjh lkjh lkjh lkjh lkjh lkjh lkjhljk hljk lkjh\
          lkjhlkjh lkjh kjh lkjh kljh ljkhlkj lkjh lkjh lkjh lkjh lkjh lkhj lkjh lkhl"
     tag_model_df['tag'] = 'Untagged'
+    tag_model_df['id'] = range(0, len(tag_model_df))
+    tag_model_df['tag_id'] = range(0, len(tag_model_df))
     tag_model_df['copy_text'] = range(100000, 100000 + len(tag_model_df))
     tag_model_df['reverse'] = tag_model_df.loc[:, 'comment'].apply(lambda x: x[::-1])
     # https://stackoverflow.com/questions/65982695/insert-a-new-column-in-pandas-with-random-string-values
@@ -39,8 +40,8 @@ if predefined_csv:
     print(f'[tag_model_df.to_sql]: Start')
     engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
     with engine.begin() as connection:
-        tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace', index=True, index_label='id')
-        connection.execute('alter table test_tsv add primary key(id)')
+        tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace', index=False)
+        # connection.execute('alter table test_tsv add primary key(id)')
     print(f'[tag_model_df.to_sql]: End')
 
 save_data_frame = False

@@ -1,14 +1,13 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 
-from data.data_frame import tag_model_df
+from layout.data_table.layout import tag_data_df
 
 table_buttons_layout = html.Div(
     [
         dbc.Row(
             [
                 dbc.Col(
-
                     [
                         html.Div(
                             [
@@ -62,7 +61,7 @@ table_buttons_layout = html.Div(
                         dbc.Button(
                             [
                                 "Untagged ",
-                                dbc.Badge(len(tag_model_df), id="badge", color="light", text_color="primary"),
+                                dbc.Badge(len(tag_data_df), id="badge", color="light", text_color="primary"),
                             ],
                             color="primary",
                             active=False,

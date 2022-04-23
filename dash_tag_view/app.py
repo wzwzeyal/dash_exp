@@ -7,11 +7,12 @@ from dash import Input, Output, no_update, callback_context, State
 from flask import Flask
 from sqlalchemy import create_engine, text
 
-from data.data_frame import tag_model_df
+from layout.data_table.layout import tag_data_df
 from layout.main_layout import create_layout
 from resources.strings import tag_button_names
+import pandas as pd
 
-engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=False)
+engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
 
 server = Flask(__name__)
 
@@ -23,7 +24,6 @@ app.server.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@l
 
 # db = SQLAlchemy(app.server)
 # app = DashProxy(prevent_initial_callbacks=True, transforms=[TriggerTransform(), GroupTransform()])
-
 
 app.layout = create_layout()
 
@@ -42,7 +42,7 @@ def on_page_size_change(page_size):
     print(f'[on_page_size_change]: page_size: {page_size}')
     print(f'[on_page_size_change]: End')
     if page_size == 'All':
-        return len(tag_model_df)
+        return len(tag_data_df)
     return int(page_size)
 
 
@@ -54,8 +54,8 @@ def on_page_size_change(page_size):
 def on_data_change(data):
     # return no_update
     print(f'[on_data_change]: Start')
-    nof_tags_left = len(tag_model_df[tag_model_df['tag'].str.contains("Untagged")])
-    percent_complete = (len(tag_model_df) - nof_tags_left) / len(tag_model_df)
+    nof_tags_left = len(tag_data_df[tag_data_df['tag'].str.contains("Untagged")])
+    percent_complete = (len(tag_data_df) - nof_tags_left) / len(tag_data_df)
     percent_complete *= 100
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
@@ -66,7 +66,7 @@ def on_data_change(data):
     Output('records-data-table', 'data'),
     tag_buttons_input,
     State('records-data-table', 'derived_viewport_data'), # -5
-    State('filter-table', 'value'),  # -4
+    Input('filter-table', 'value'),  # -4
     State('records-data-table', 'active_cell'),  # -3
     Input('records-data-table', "page_current"),  # -2
     Input('records-data-table', "page_size"),  # -1
@@ -79,6 +79,7 @@ def update_paged_table(*args):
     active_cell = args[-3]
     filter_table = args[-4]
     derived_viewport_data = args[-5]
+    print(f'[update_paged_table]: derived_viewport_data: {derived_viewport_data}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -96,21 +97,25 @@ def update_paged_table(*args):
         print(f'[update_paged_table]: active_cell: {active_cell}')
         # table_id = page_current * page_size +
         if 'but' in button_id:
-            row = active_cell['row_id']
-            tag_table_id = derived_viewport_data[row]['id']
+            row = active_cell['row']
+            tag_table_id = derived_viewport_data[row]['tag_id']
             print(f'[update_paged_table]: tag_table_id: {tag_table_id}')
-            print(f"[update_paged_table]: before : {tag_model_df.at[tag_table_id, 'tag']}")
-            tag_model_df.at[tag_table_id, 'tag'] = button_id
-            print(f"[update_paged_table]: before : {tag_model_df.at[tag_table_id, 'tag']}")
+            print(f"[update_paged_table]: before : {tag_data_df.at[tag_table_id, 'tag']}")
+            tag_data_df.at[tag_table_id, 'tag'] = button_id
+            print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
+            # engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
+            # with engine.begin() as connection:
+            #     tag_data_df.to_sql('test_tsv', con=connection, if_exists='replace')
+            sql_update(button_id, tag_table_id)
 
     if filter_table == 1:
         # Only Untagged
-        untagged_df = tag_model_df[tag_model_df['tag'].str.contains('Untagged')]
+        untagged_df = tag_data_df[tag_data_df['tag'].str.contains('Untagged')]
         res = untagged_df.iloc[
                                 page_current * page_size:(page_current + 1) * page_size
                                 ]
     else:
-        res = tag_model_df.iloc[
+        res = tag_data_df.iloc[
                             page_current * page_size:(page_current + 1) * page_size
                             ]
         
@@ -185,7 +190,10 @@ def handle_tag_button(active_cell, button_id, derived_viewport_data):
     print(f'[on_btn_click]: table_id: {table_id}')
     if 'but' in button_id:
         # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
-        tag_model_df.at[table_id, 'tag'] = button_id
+        tag_data_df.at[table_id, 'tag'] = button_id
+
+        with engine.begin() as connection:
+            tag_data_df.to_sql('test_tsv', con=connection, if_exists='replace')
 
         # sql_update(button_id, table_id)
 
@@ -205,7 +213,7 @@ def sql_update(button_id, table_id):
         tbl_name = 'test_tsv'
         col_name = 'tag'
         new_val = str(button_id)
-        col_id_name = 'id'
+        col_id_name = 'tag_id'
         sql_str = f"UPDATE {tbl_name} set {col_name} = '{new_val}'\
             WHERE {col_id_name} = {table_id}"
         print(f'[sql_update]: sql_str: {sql_str}')
@@ -220,7 +228,7 @@ def sql_update(button_id, table_id):
     Output('right-textarea-example', 'value'),
     Output('textarea_id', 'value'),
     Input('records-data-table', 'active_cell'),
-    Input('records-data-table', 'derived_viewport_data')
+    State('records-data-table', 'derived_viewport_data')
 )
 def on_active_cell(active_cell, derived_viewport_data):
     print(f'[on_active_cell]: Start')
@@ -241,7 +249,7 @@ def on_active_cell(active_cell, derived_viewport_data):
     if row < len(derived_viewport_data):
         row_data = derived_viewport_data[row]
         print(f'[on_active_cell]: row_data: {row_data}')
-        print(f"[on_active_cell]: row_data[id]: {row_data['id']}")
+        # print(f"[on_active_cell]: row_data[id]: {row_data['tag_id']}")
         print(f'[on_active_cell]: End')
         return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
     else:

@@ -77,7 +77,6 @@ data_table_layout = html.Div(
             },
             sort_action='native',
             filter_action='native',
-            row_selectable="single",
             editable=True,
             style_data=
             {

@@ -7,8 +7,6 @@
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="fix tag update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../dash_tag_view/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/data_table/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/data_table/layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +154,7 @@
       <workItem from="1650717163896" duration="21878000" />
       <workItem from="1650747302434" duration="979000" />
       <workItem from="1650789275903" duration="1148000" />
-      <workItem from="1650823847444" duration="6700000" />
+      <workItem from="1650823847444" duration="7231000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -333,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650829783613</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix tag update">
+      <created>1650831449868</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1650831449868</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,7 +374,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1650831262980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
+    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1650831894621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
     <SUITE FILE_PATH="coverage/dash_layout$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1650571205785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_postgres" />
     <SUITE FILE_PATH="coverage/dash_layout$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1650721475908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

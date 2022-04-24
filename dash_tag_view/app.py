@@ -50,7 +50,7 @@ def on_page_size_change(page_size):
     Output('tag-left-progress', 'value'),
     Input('records-data-table', 'data'),
 )
-def on_data_change(data):
+def on_data_change(_):
     # return no_update
     print(f'[on_data_change]: Start')
     nof_records = len(tag_data_df)
@@ -77,25 +77,24 @@ def get_next_untagged():
     Output('textarea_id', 'value'),
     Output('records-data-table', 'data'),
     Output('records-data-table', 'active_cell'),
-    Output('details', 'style'),
     tag_buttons_input,
     Input('records-data-table', 'active_cell'),  # -2
     State('records-data-table', 'data'),  # -1
 )
-def on_tag_click(*args):
-    print(f'[on_tag_click]: Start')
+def on_button_click(*args):
+    print(f'[on_button_click]: Start')
 
     data = args[-1]
     active_cell = args[-2]
 
-    print(f'[on_tag_click]: active_cell: {active_cell}')
+    print(f'[on_button_click]: active_cell: {active_cell}')
 
     if data is not None:
-        print(f'[on_tag_click]: len(data): {len(data)}')
+        print(f'[on_button_click]: len(data): {len(data)}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print(f'[on_tag_click]: button_id: {button_id}')
+    print(f'[on_button_click]: button_id: {button_id}')
 
     next_untagged = get_next_untagged()
     tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
@@ -104,52 +103,47 @@ def on_tag_click(*args):
 
     # handle initial state
     if button_id == "":
-        print(f'[on_tag_click]: initial state')
+        print(f'[on_button_click]: initial state')
         output_res = (
             next_untagged['comment'],
             next_untagged['reverse'],
             str(next_untagged['copy_text']),
             tagged_data.to_dict('records'),
             no_update,
-            no_update,
         )
         return output_res
-
-    # handle tag button click
-
-    with_border_style = {'margin': 10, "borderStyle": "groove"}
-    no_border_style = {'margin': 10, "borderStyle": "hidden"}
 
     if 'but' in button_id or 'Untagged' in button_id:
         # change current tag (init or not selected)
         if active_cell is None:
-            output_res = update_details_tag(button_id, next_untagged, with_border_style)
+            output_res = update_details_tag(button_id, next_untagged)
         else:
             # on selected row
-            output_res = update_active_cell_tag(active_cell, button_id, data, next_untagged, with_border_style)
+            output_res = update_active_cell_tag(active_cell, button_id, data, next_untagged)
 
     elif button_id == 'records-data-table':
-        output_res = update_text_on_switching_active_cell(active_cell, data, no_border_style)
+        output_res = update_text_on_switching_active_cell(active_cell, data)
 
     return output_res
 
 
-def update_text_on_switching_active_cell(active_cell, data, border_style):
+def update_text_on_switching_active_cell(active_cell, data):
     print(f'[update_text_on_switching_active_cell]: Start')
+    output_res = no_update
     if active_cell is None:
-        return no_update
-        
+        return output_res
+
     selected_row = active_cell['row_id']
     if selected_row < len(data):
         row = data[selected_row]
         output_res = (row['comment'], row['reverse'], str(row['copy_text']),
-                      no_update, no_update, border_style)
-    
+                      no_update, no_update)
+
     print(f'[update_text_on_switching_active_cell]: End')
     return output_res
 
 
-def update_active_cell_tag(active_cell, button_id, data, next_untagged, border_style):
+def update_active_cell_tag(active_cell, button_id, data, next_untagged):
     print(f'[update_active_cell_tag]: Start')
     selected_row = active_cell['row_id']
     print(f'[on_tag_click]: selected_row: {selected_row}')
@@ -159,12 +153,12 @@ def update_active_cell_tag(active_cell, button_id, data, next_untagged, border_s
     tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
     output_res = (next_untagged['comment'], next_untagged['reverse'],
                   str(next_untagged['copy_text']), tagged_data.to_dict('records'),
-                  None, border_style)
+                  None)
     print(f'[update_active_cell_tag]: End')
     return output_res
 
 
-def update_details_tag(button_id, next_untagged, border_style):
+def update_details_tag(button_id, next_untagged):
     print(f'[update_details_tag]: Start')
     tag_table_id = next_untagged['tag_id']
     tag_data_df.at[tag_table_id, 'tag'] = button_id
@@ -172,7 +166,7 @@ def update_details_tag(button_id, next_untagged, border_style):
     tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
     output_res = (next_untagged['comment'], next_untagged['reverse'],
                   str(next_untagged['copy_text']),
-                  tagged_data.to_dict('records'), no_update, border_style)
+                  tagged_data.to_dict('records'), no_update)
     print(f'[update_details_tag]: End')
     return output_res
 

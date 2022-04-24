@@ -77,6 +77,7 @@ def get_next_untagged():
     Output('textarea_id', 'value'),
     Output('records-data-table', 'data'),
     Output('records-data-table', 'active_cell'),
+    Output('details', 'style'),
     tag_buttons_input,
     Input('records-data-table', 'active_cell'),  # -2
     State('records-data-table', 'data'),  # -1
@@ -109,39 +110,70 @@ def on_tag_click(*args):
             next_untagged['reverse'],
             str(next_untagged['copy_text']),
             tagged_data.to_dict('records'),
-            no_update)
+            no_update,
+            no_update,
+        )
         return output_res
 
     # handle tag button click
 
+    with_border_style = {'margin': 10, "borderStyle": "groove"}
+    no_border_style = {'margin': 10, "borderStyle": "hidden"}
+
     if 'but' in button_id or 'Untagged' in button_id:
         # change current tag (init or not selected)
         if active_cell is None:
-            print(f'[on_tag_click]: change current tag')
-            tag_table_id = next_untagged['tag_id']
-            tag_data_df.at[tag_table_id, 'tag'] = button_id
-            next_untagged = get_next_untagged()
-            tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-            output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                          tagged_data.to_dict('records'), no_update)
+            output_res = update_details_tag(button_id, next_untagged, with_border_style)
         else:
             # on selected row
-            selected_row = active_cell['row']
-            print(f'[on_tag_click]: selected_row: {selected_row}')
-            derived_row = data[selected_row]
-            tag_table_id = derived_row['tag_id']
-            tag_data_df.at[tag_table_id, 'tag'] = button_id
-            tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-            output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                          tagged_data.to_dict('records'), None)
+            output_res = update_active_cell_tag(active_cell, button_id, data, next_untagged, with_border_style)
 
     elif button_id == 'records-data-table':
-        selected_row = active_cell['row']
-        if selected_row < len(data):
-            derived_row = data[selected_row]
-            output_res = (derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
-                          no_update, no_update)
+        output_res = update_text_on_switching_active_cell(active_cell, data, no_border_style)
 
+    return output_res
+
+
+def update_text_on_switching_active_cell(active_cell, data, border_style):
+    print(f'[update_text_on_switching_active_cell]: Start')
+    if active_cell is None:
+        return no_update
+        
+    selected_row = active_cell['row_id']
+    if selected_row < len(data):
+        row = data[selected_row]
+        output_res = (row['comment'], row['reverse'], str(row['copy_text']),
+                      no_update, no_update, border_style)
+    
+    print(f'[update_text_on_switching_active_cell]: End')
+    return output_res
+
+
+def update_active_cell_tag(active_cell, button_id, data, next_untagged, border_style):
+    print(f'[update_active_cell_tag]: Start')
+    selected_row = active_cell['row_id']
+    print(f'[on_tag_click]: selected_row: {selected_row}')
+    row = data[selected_row]
+    tag_table_id = row['tag_id']
+    tag_data_df.at[tag_table_id, 'tag'] = button_id
+    tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
+    output_res = (next_untagged['comment'], next_untagged['reverse'],
+                  str(next_untagged['copy_text']), tagged_data.to_dict('records'),
+                  None, border_style)
+    print(f'[update_active_cell_tag]: End')
+    return output_res
+
+
+def update_details_tag(button_id, next_untagged, border_style):
+    print(f'[update_details_tag]: Start')
+    tag_table_id = next_untagged['tag_id']
+    tag_data_df.at[tag_table_id, 'tag'] = button_id
+    next_untagged = get_next_untagged()
+    tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
+    output_res = (next_untagged['comment'], next_untagged['reverse'],
+                  str(next_untagged['copy_text']),
+                  tagged_data.to_dict('records'), no_update, border_style)
+    print(f'[update_details_tag]: End')
     return output_res
 
 

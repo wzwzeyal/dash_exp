@@ -38,5 +38,6 @@ details_layout = html.Div(
             ], style={"width": "100%", "position": "relative"}
         ),
     ],
-    style={'margin': 10}
+    id="details",
+    style={'margin': 10, "borderStyle": "groove"}
 )

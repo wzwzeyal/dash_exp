@@ -18,6 +18,7 @@ if predefined_csv:
     predefined_csv = predefined_csv.drop(['Unnamed: 0'], axis=1)
     # print(tag_model_df.columns)
     predefined_csv['tag'] = 'Untagged'
+    predefined_csv['id'] = range(0, len(predefined_csv))
     predefined_csv['tag_id'] = range(0, len(predefined_csv))
     predefined_csv['copy_text'] = range(100000, 100000 + len(predefined_csv))
     predefined_csv['reverse'] = predefined_csv.loc[:, 'comment'].apply(lambda x: x[::-1])

@@ -76,6 +76,7 @@ def get_next_untagged():
     Output('textarea_id', 'value'),
     Output('records-data-table', 'data'),
     Output('records-data-table', 'selected_rows'),
+    Output('records-data-table', 'active_cell'),
     tag_buttons_input,
     Input('records-data-table', 'active_cell'),  # -3
     Input('records-data-table', 'selected_rows'),  # -2
@@ -105,36 +106,37 @@ def on_tag_click(*args):
     if button_id == "":
         print(f'[on_tag_click]: initial state')
         return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-               tagged_data.to_dict('records'), no_update
+               tagged_data.to_dict('records'), no_update, no_update
 
     # handle tag button click
 
     if 'but' in button_id or 'Untagged' in button_id:
         # change current tag (init or not selected)
-        if derived_viewport_selected_rows is None or len(derived_viewport_selected_rows) == 0:
+        if active_cell is None:
             print(f'[on_tag_click]: change current tag')
             tag_table_id = next_untagged['tag_id']
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             next_untagged = get_next_untagged()
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
             return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                   tagged_data.to_dict('records'), no_update
+                   tagged_data.to_dict('records'), no_update, no_update
         else:
             # on selected row
             print(f'[on_tag_click]: selected_rows: {derived_viewport_selected_rows}')
-            derived_row = derived_viewport_data[derived_viewport_selected_rows[0]]
+            selected_row = active_cell['row']
+            derived_row = derived_viewport_data[selected_row]
             tag_table_id = derived_row['tag_id']
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
             return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                   tagged_data.to_dict('records'), []
+                   tagged_data.to_dict('records'), [], None
 
     elif button_id == 'records-data-table':
-        selected_row = derived_viewport_selected_rows[0]
+        selected_row = active_cell['row']
         if selected_row < len(derived_viewport_data):
             derived_row = derived_viewport_data[selected_row]
             return derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
-                   no_update, no_update
+                   no_update, no_update, no_update
         else:
             return no_update
 

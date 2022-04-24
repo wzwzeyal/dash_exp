@@ -9,6 +9,8 @@ for count, item in enumerate(tag_button_names):
         dbc.Button(
             item,
             id=item,
+            outline=True,
+
             # id={
             #     'type': 'push-button',  # used for the group matching
             #     'index': count,  # index-key, item-value
@@ -16,7 +18,8 @@ for count, item in enumerate(tag_button_names):
             # className="m-1",
             style={
                 "width": "80px",
-
+                "color": 'black',
+                'border': 'groove',
                 # "padding": "5px",
                 "margin-right": 5,
                 "margin-bottom": 3,

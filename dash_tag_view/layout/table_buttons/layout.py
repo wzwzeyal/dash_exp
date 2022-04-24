@@ -37,27 +37,6 @@ table_buttons_layout = html.Div(
 
                 dbc.Col(
                     html.Div(
-                        [
-                            dbc.RadioItems(
-                                id="filter-table",
-                                className="btn-group",
-                                inputClassName="btn-check",
-                                labelClassName="btn btn-outline-primary",
-                                labelCheckedClassName="active",
-                                options=[
-                                    {"label": "Show Untagged", "value": 1},
-                                    {"label": "Show All", "value": 2},
-                                ],
-                                value=1,
-                            ),
-                        ],
-                        className="radio-group",
-                    ),
-                    width="auto",
-                ),
-
-                dbc.Col(
-                    html.Div(
                         dbc.Button(
                             [
                                 "Untagged ",
@@ -70,21 +49,12 @@ table_buttons_layout = html.Div(
                     width="auto",
 
                 ),
-                dbc.Col(
-                    dcc.Input(
-                        id='text-filter',
-                        type='text',
-                        debounce=False,
-                        placeholder="Search for text",
 
-                    ),
-                    width="auto",
-                ),
                 dbc.Col(
 
                     dbc.Progress(
-                        id='tag-complete-progress',
-                        value=0,
+                        id='tag-left-progress',
+                        value=100,
 
                         style=
                         {

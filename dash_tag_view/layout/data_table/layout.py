@@ -1,10 +1,15 @@
-from dash import dash_table, dcc
-from dash import html
-import pandas as pd
-from sqlalchemy import create_engine
 import random
 
-predefined_csv = False
+import pandas as pd
+from dash import dash_table
+from dash import html
+from sqlalchemy import create_engine
+
+from resources.strings import tag_button_names
+
+predefined_csv = True
+
+use_postgres = False
 
 if predefined_csv:
     print("predefined_csv")
@@ -22,34 +27,40 @@ if predefined_csv:
     predefined_csv['random1'] = pd.Series(random.choices(random1, k=len(predefined_csv)), index=predefined_csv.index)
     predefined_csv['random2'] = pd.Series(random.choices(random2, k=len(predefined_csv)), index=predefined_csv.index)
     print(f'[tag_model_df.to_sql]: Start')
-    engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
-    with engine.begin() as connection:
-        predefined_csv.to_sql('test_tsv', con=connection, if_exists='replace')
-    print(f'[tag_model_df.to_sql]: End')
+    if use_postgres:
+        engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
+        with engine.begin() as connection:
+            predefined_csv.to_sql('test_tsv', con=connection, if_exists='replace')
+        print(f'[tag_model_df.to_sql]: End')
 
 # engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
 # with engine.begin() as connection:
 #     tag_data_df = pd.read_sql_query("SELECT * FROM test_tsv", con=connection)
 
+if use_postgres:
+    tag_data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
+else:
+    tag_data_df = predefined_csv.copy()
 
-tag_data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
 print(len(tag_data_df))
-print(tag_data_df.head(10)[['index', 'tag_id']])
+# print(tag_data_df.head(10)[['index', 'tag_id']])
 tag_data_df.sort_values(by='tag_id', inplace=True)
 tag_data_df.set_index('tag_id', inplace=True, drop=False)
 print(tag_data_df.columns)
-print(tag_data_df.head(10)[['index', 'tag_id']])
+# print(tag_data_df.head(10)[['index', 'tag_id']])
 
+tagged_df = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
 
 data_table_layout = html.Div(
     [
+
         dash_table.DataTable(
-            tag_data_df.head(10).to_dict('records'),
+            tagged_df.head(10).to_dict('records'),
             # [{"name": i, "id": i} for i in tag_data_df.columns],
             id='records-data-table',
-            columns=[
-
-                dict(name='Tag', id='tag', ),
+            columns=
+            [
+                dict(name='Tag', id='tag'),
                 dict(name='Copy', id='copy_text', ),
                 dict(name="random2", id="random2", ),
                 dict(name="random1", id="random1", ),
@@ -58,14 +69,15 @@ data_table_layout = html.Div(
                 dict(name='Tag Id', id='tag_id'),
             ],
             page_current=0,
-            page_size=1,
-            page_action='custom',
+            page_size=10,
+            page_action='native',
             style_table={
                 'max-height': '400px',
                 'overflowY': 'auto'
             },
-            # sort_action='native',
-            # filter_action='native',
+            sort_action='native',
+            filter_action='native',
+            row_selectable="single",
             editable=True,
             style_data=
             {

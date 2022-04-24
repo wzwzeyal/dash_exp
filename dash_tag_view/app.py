@@ -53,13 +53,14 @@ def on_page_size_change(page_size):
 def on_data_change(data):
     # return no_update
     print(f'[on_data_change]: Start')
+    nof_records = len(tag_data_df)
     nof_tags_left = len(tag_data_df[tag_data_df['tag'].str.contains("Untagged")])
-    badge = f'{nof_tags_left} / {len(tag_data_df)}'
-    percent_left = nof_tags_left / len(tag_data_df)
-    percent_left *= 100
+    percent_left = (nof_records - nof_tags_left) / nof_records
+    badge = f"{percent_left:.0%}, {nof_tags_left} / {nof_records}"
+
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
-    return badge, percent_left
+    return badge, percent_left * 100
 
 
 def get_next_untagged():
@@ -122,7 +123,7 @@ def on_tag_click(*args):
             next_untagged = get_next_untagged()
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
             output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                           tagged_data.to_dict('records'), no_update)
+                          tagged_data.to_dict('records'), no_update)
         else:
             # on selected row
             selected_row = active_cell['row']
@@ -132,14 +133,14 @@ def on_tag_click(*args):
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
             output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                   tagged_data.to_dict('records'), None)
+                          tagged_data.to_dict('records'), None)
 
     elif button_id == 'records-data-table':
         selected_row = active_cell['row']
         if selected_row < len(data):
             derived_row = data[selected_row]
             output_res = (derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
-                   no_update, no_update)
+                          no_update, no_update)
 
     return output_res
 

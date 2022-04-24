@@ -5,8 +5,6 @@ from dash import dash_table
 from dash import html
 from sqlalchemy import create_engine
 
-from resources.strings import tag_button_names
-
 predefined_csv = True
 
 use_postgres = False
@@ -66,7 +64,7 @@ data_table_layout = html.Div(
                 dict(name="random1", id="random1", ),
                 dict(name='Right Text', id='reverse', ),
                 dict(name='Left Text', id='comment'),
-                dict(name='Tag Id', id='tag_id'),
+                # dict(name='Tag Id', id='tag_id'),
             ],
             page_current=0,
             page_size=10,
@@ -93,8 +91,8 @@ data_table_layout = html.Div(
     {
         'width': '97%',
         'position': 'absolute',
-        'top' : 680,
-        'left' : 10,
+        # 'top': 680,
+        'left': 10,
         # 'display': 'flex',
         # 'margin-left': '20',
         # 'overflow-y': 'scroll',

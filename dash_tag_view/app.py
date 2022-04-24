@@ -75,25 +75,21 @@ def get_next_untagged():
     Output('right-textarea-example', 'value'),
     Output('textarea_id', 'value'),
     Output('records-data-table', 'data'),
-    Output('records-data-table', 'selected_rows'),
     Output('records-data-table', 'active_cell'),
     tag_buttons_input,
-    Input('records-data-table', 'active_cell'),  # -3
-    Input('records-data-table', 'selected_rows'),  # -2
+    Input('records-data-table', 'active_cell'),  # -2
     State('records-data-table', 'data'),  # -1
 )
 def on_tag_click(*args):
     print(f'[on_tag_click]: Start')
 
-    derived_viewport_data = args[-1]
-    derived_viewport_selected_rows = args[-2]
-    active_cell = args[-3]
-    
+    data = args[-1]
+    active_cell = args[-2]
+
     print(f'[on_tag_click]: active_cell: {active_cell}')
 
-    if derived_viewport_data is not None:
-        print(f'[on_tag_click]: len(derived_viewport_data): {len(derived_viewport_data)}')
-    print(f'[on_tag_click]: derived_viewport_selected_rows {derived_viewport_selected_rows}')
+    if data is not None:
+        print(f'[on_tag_click]: len(data): {len(data)}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -102,11 +98,18 @@ def on_tag_click(*args):
     next_untagged = get_next_untagged()
     tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
 
+    output_res = no_update
+
     # handle initial state
     if button_id == "":
         print(f'[on_tag_click]: initial state')
-        return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-               tagged_data.to_dict('records'), no_update, no_update
+        output_res = (
+            next_untagged['comment'],
+            next_untagged['reverse'],
+            str(next_untagged['copy_text']),
+            tagged_data.to_dict('records'),
+            no_update)
+        return output_res
 
     # handle tag button click
 
@@ -118,57 +121,27 @@ def on_tag_click(*args):
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             next_untagged = get_next_untagged()
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-            return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                   tagged_data.to_dict('records'), no_update, no_update
+            output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
+                           tagged_data.to_dict('records'), no_update)
         else:
             # on selected row
-            print(f'[on_tag_click]: selected_rows: {derived_viewport_selected_rows}')
             selected_row = active_cell['row']
-            derived_row = derived_viewport_data[selected_row]
+            print(f'[on_tag_click]: selected_row: {selected_row}')
+            derived_row = data[selected_row]
             tag_table_id = derived_row['tag_id']
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-            return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
-                   tagged_data.to_dict('records'), [], None
+            output_res = (next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
+                   tagged_data.to_dict('records'), None)
 
     elif button_id == 'records-data-table':
         selected_row = active_cell['row']
-        if selected_row < len(derived_viewport_data):
-            derived_row = derived_viewport_data[selected_row]
-            return derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
-                   no_update, no_update, no_update
-        else:
-            return no_update
+        if selected_row < len(data):
+            derived_row = data[selected_row]
+            output_res = (derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
+                   no_update, no_update)
 
-    return no_update
-
-
-
-
-
-def handle_tag_button(active_cell, button_id, derived_viewport_data):
-    print(f'[handle_tag_button]: Start')
-    print(f'[on_btn_click]: button_id: {button_id}')
-    row = active_cell['row']
-    table_id = derived_viewport_data[row]['tag_id']
-    print(f'[on_btn_click]: table_id: {table_id}')
-    if 'but' in button_id:
-        # print(f'[handle_tag_button]: tag_model_df.iloc[table_id]: {tag_model_df.iloc[table_id]}')
-        tag_data_df.at[table_id, 'tag'] = button_id
-
-        with engine.begin() as connection:
-            tag_data_df.to_sql('test_tsv', con=connection, if_exists='replace')
-
-        # sql_update(button_id, table_id)
-
-        # with engine.begin() as connection:
-        #     tag_model_df.to_sql('test_tsv', con=connection, if_exists='replace')
-
-        # postgres_conn = postgres_db.connect()
-        # tag_model_df.to_sql('test_tsv', con=postgres_conn, if_exists='replace',
-        #                     index=False)
-        # postgres_conn.close()
-    print(f'[handle_tag_button]: End')
+    return output_res
 
 
 def sql_update(button_id, table_id):
@@ -185,45 +158,6 @@ def sql_update(button_id, table_id):
         res = connection.execute(text(sql_str))
         print(f'[sql_update]: res: {res}')
     print(f'[sql_update]: End')
-
-
-# @app.callback(
-#     Output('left-textarea-example', 'value'),
-#     Output('right-textarea-example', 'value'),
-#     Output('textarea_id', 'value'),
-#     Input('records-data-table', 'active_cell'),
-#     State('records-data-table', 'derived_viewport_data')
-# )
-# def on_active_cell(active_cell, derived_viewport_data):
-#     return no_update
-#     print(f'[on_active_cell]: Start')
-#
-#     print(f'[on_active_cell]: active_cell: {active_cell}')
-#     # print(f'[on_active_cell]: derived_viewport_data: {derived_viewport_data}')
-#
-#     if active_cell is None:
-#         print(f'[on_active_cell]: no_update, active_cell is NONE')
-#         # update details with first untagged
-#         first_untagged = tag_data_df[tag_data_df['tag'].str.contains('Untagged')].head(1)
-#         return first_untagged.iloc[0]['comment'], first_untagged.iloc[0]['reverse'], str(first_untagged.iloc[0]['copy_text'])
-#         print(f'[on_active_cell]: first_untagged {first_untagged}' )
-#
-#     if derived_viewport_data is None:
-#         print(f'[on_active_cell]: no_update, derived_viewport_data is NONE')
-#         return no_update
-#
-#
-#     row = active_cell['row']
-#
-#     if row < len(derived_viewport_data):
-#         row_data = derived_viewport_data[row]
-#         print(f'[on_active_cell]: row_data: {row_data}')
-#         # print(f"[on_active_cell]: row_data[id]: {row_data['tag_id']}")
-#         print(f'[on_active_cell]: End')
-#         return row_data['comment'], row_data['reverse'], str(row_data['copy_text'])
-#     else:
-#         print(f'[on_active_cell]: error: row: {row}, {len(derived_viewport_data)}')
-#         return no_update
 
 
 if __name__ == '__main__':

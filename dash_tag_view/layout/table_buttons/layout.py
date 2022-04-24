@@ -55,7 +55,6 @@ table_buttons_layout = html.Div(
                     dbc.Progress(
                         id='tag-left-progress',
                         value=100,
-
                         style=
                         {
                             'height': 20,
@@ -68,6 +67,5 @@ table_buttons_layout = html.Div(
             ],
             align='center',
         ),
-        html.Br(),
     ],
 )

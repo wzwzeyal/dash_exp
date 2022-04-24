@@ -55,12 +55,12 @@ def on_data_change(data):
     print(f'[on_data_change]: Start')
     nof_records = len(tag_data_df)
     nof_tags_left = len(tag_data_df[tag_data_df['tag'].str.contains("Untagged")])
-    percent_left = (nof_records - nof_tags_left) / nof_records
-    badge = f"{percent_left:.0%}, {nof_tags_left} / {nof_records}"
+    percent_tagged = (nof_records - nof_tags_left) / nof_records
+    badge = f"{(1 - percent_tagged):.0%}, {nof_tags_left} / {nof_records}"
 
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
-    return badge, percent_left * 100
+    return badge, percent_tagged * 100
 
 
 def get_next_untagged():

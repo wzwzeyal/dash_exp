@@ -77,17 +77,17 @@ def get_next_untagged():
     Output('records-data-table', 'selected_rows'),
     tag_buttons_input,
     Input('records-data-table', 'selected_rows'),  # -2
-    State('records-data-table', 'derived_viewport_data'),  # -1
+    State('records-data-table', 'data'),  # -1
 )
 def on_tag_click(*args):
     print(f'[on_tag_click]: Start')
 
     derived_viewport_data = args[-1]
-    selected_rows = args[-2]
+    derived_viewport_selected_rows = args[-2]
 
     if derived_viewport_data is not None:
         print(f'[on_tag_click]: len(derived_viewport_data): {len(derived_viewport_data)}')
-    print(f'[on_tag_click]: selected_rows {selected_rows}')
+    print(f'[on_tag_click]: derived_viewport_selected_rows {derived_viewport_selected_rows}')
 
     ctx = callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -105,7 +105,7 @@ def on_tag_click(*args):
 
     if 'but' in button_id:
         # change current tag (init or not selected)
-        if selected_rows is None or len(selected_rows) == 0:
+        if derived_viewport_selected_rows is None or len(derived_viewport_selected_rows) == 0:
             print(f'[on_tag_click]: change current tag')
             tag_table_id = next_untagged['tag_id']
             tag_data_df.at[tag_table_id, 'tag'] = button_id
@@ -115,8 +115,8 @@ def on_tag_click(*args):
                    tagged_data.to_dict('records'), no_update
         else:
             # on selected row
-            print(f'[on_tag_click]: selected_rows: {selected_rows}')
-            derived_row = derived_viewport_data[selected_rows[0]]
+            print(f'[on_tag_click]: selected_rows: {derived_viewport_selected_rows}')
+            derived_row = derived_viewport_data[derived_viewport_selected_rows[0]]
             tag_table_id = derived_row['tag_id']
             tag_data_df.at[tag_table_id, 'tag'] = button_id
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
@@ -124,7 +124,7 @@ def on_tag_click(*args):
                    tagged_data.to_dict('records'), []
 
     elif button_id == 'records-data-table':
-        selected_row = selected_rows[0]
+        selected_row = derived_viewport_selected_rows[0]
         derived_row = derived_viewport_data[selected_row]
         return derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
                no_update, no_update
@@ -142,12 +142,12 @@ def on_tag_click(*args):
         print(f'[update_paged_table]: tag_table_id: {tag_table_id}')
         print(f"[update_paged_table]: before : {tag_data_df.at[tag_table_id, 'tag']}")
 
-        if selected_rows is None:
+        if derived_viewport_selected_rows is None:
             tag_data_df.at[tag_table_id, 'tag'] = button_id
 
         else:
-            if len(selected_rows) > 0:
-                row_view_data = derived_viewport_data[selected_rows[0]]
+            if len(derived_viewport_selected_rows) > 0:
+                row_view_data = derived_viewport_data[derived_viewport_selected_rows[0]]
                 tag_table_id = row_view_data['tag_id']
                 tag_data_df.at[tag_table_id, 'tag'] = button_id
             else:
@@ -156,14 +156,14 @@ def on_tag_click(*args):
         print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
         # sql_update(button_id, tag_table_id)
 
-    if selected_rows is None:
+    if derived_viewport_selected_rows is None:
         first_untagged = tag_data_df[tag_data_df['tag'].str.contains('Untagged')].head(1)
         row_data = first_untagged.iloc[0]
         tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
         row_data['comment'], row_data['reverse'], str(row_data['copy_text']), None, tagged_data.to_dict('records'), []
     else:
-        if len(selected_rows) > 0:
-            row_view_data = derived_viewport_data[selected_rows[0]]
+        if len(derived_viewport_selected_rows) > 0:
+            row_view_data = derived_viewport_data[derived_viewport_selected_rows[0]]
             tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
             return row_view_data['comment'], row_view_data['reverse'], str(
                 row_view_data['copy_text']), None, tagged_data.to_dict('records'), no_update

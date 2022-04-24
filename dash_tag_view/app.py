@@ -77,6 +77,7 @@ def get_next_untagged():
     Output('records-data-table', 'data'),
     Output('records-data-table', 'selected_rows'),
     tag_buttons_input,
+    Input('records-data-table', 'active_cell'),  # -3
     Input('records-data-table', 'selected_rows'),  # -2
     State('records-data-table', 'data'),  # -1
 )
@@ -85,6 +86,9 @@ def on_tag_click(*args):
 
     derived_viewport_data = args[-1]
     derived_viewport_selected_rows = args[-2]
+    active_cell = args[-3]
+    
+    print(f'[on_tag_click]: active_cell: {active_cell}')
 
     if derived_viewport_data is not None:
         print(f'[on_tag_click]: len(derived_viewport_data): {len(derived_viewport_data)}')
@@ -98,7 +102,8 @@ def on_tag_click(*args):
     tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
 
     # handle initial state
-    if derived_viewport_data is None:
+    if button_id == "":
+        print(f'[on_tag_click]: initial state')
         return next_untagged['comment'], next_untagged['reverse'], str(next_untagged['copy_text']), \
                tagged_data.to_dict('records'), no_update
 
@@ -126,201 +131,17 @@ def on_tag_click(*args):
 
     elif button_id == 'records-data-table':
         selected_row = derived_viewport_selected_rows[0]
-        derived_row = derived_viewport_data[selected_row]
-        return derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
-               no_update, no_update
-
-
-        return  no_update
+        if selected_row < len(derived_viewport_data):
+            derived_row = derived_viewport_data[selected_row]
+            return derived_row['comment'], derived_row['reverse'], str(derived_row['copy_text']), \
+                   no_update, no_update
+        else:
+            return no_update
 
     return no_update
 
-    first_untagged = tag_data_df[tag_data_df['tag'].str.contains('Untagged')].head(1)
-    row_data = first_untagged.iloc[0]
-
-    if 'but' in button_id:
-        tag_table_id = row_data['tag_id']
-        print(f'[update_paged_table]: tag_table_id: {tag_table_id}')
-        print(f"[update_paged_table]: before : {tag_data_df.at[tag_table_id, 'tag']}")
-
-        if derived_viewport_selected_rows is None:
-            tag_data_df.at[tag_table_id, 'tag'] = button_id
-
-        else:
-            if len(derived_viewport_selected_rows) > 0:
-                row_view_data = derived_viewport_data[derived_viewport_selected_rows[0]]
-                tag_table_id = row_view_data['tag_id']
-                tag_data_df.at[tag_table_id, 'tag'] = button_id
-            else:
-                tag_data_df.at[tag_table_id, 'tag'] = button_id
-
-        print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
-        # sql_update(button_id, tag_table_id)
-
-    if derived_viewport_selected_rows is None:
-        first_untagged = tag_data_df[tag_data_df['tag'].str.contains('Untagged')].head(1)
-        row_data = first_untagged.iloc[0]
-        tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-        row_data['comment'], row_data['reverse'], str(row_data['copy_text']), None, tagged_data.to_dict('records'), []
-    else:
-        if len(derived_viewport_selected_rows) > 0:
-            row_view_data = derived_viewport_data[derived_viewport_selected_rows[0]]
-            tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-            return row_view_data['comment'], row_view_data['reverse'], str(
-                row_view_data['copy_text']), None, tagged_data.to_dict('records'), no_update
-        else:
-            first_untagged = tag_data_df[tag_data_df['tag'].str.contains('Untagged')].head(1)
-            row_data = first_untagged.iloc[0]
-
-    tagged_data = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
-
-    print(f'[on_tag_click]: first_untagged {first_untagged}')
-    return row_data['comment'], row_data['reverse'], str(row_data['copy_text']), None, tagged_data.to_dict(
-        'records'), []
 
 
-# @app.callback(
-#     Output('records-data-table', 'data'),
-#     Output('records-data-table', 'active_cell'),
-#     tag_buttons_input,
-#     Input('text-filter', 'value'),
-#     State('records-data-table', 'derived_viewport_data'),  # -5
-#     Input('filter-table', 'value'),  # -4
-#     State('records-data-table', 'active_cell'),  # -3
-#     Input('records-data-table', "page_current"),  # -2
-#     Input('records-data-table', "page_size"),  # -1
-# )
-# def update_paged_table(*args):
-#
-#     return no_update
-#     print(f'[update_paged_table]: Start')
-#
-#     page_size = args[-1]
-#     page_current = args[-2]
-#     active_cell = args[-3]
-#     filter_table = args[-4]
-#     derived_viewport_data = args[-5]
-#     text_filter = args[-6]
-#     print(f'[update_paged_table]: page_size: {page_size}')
-#     # print(f'[update_paged_table]: derived_viewport_data: {derived_viewport_data}')
-#
-#     ctx = callback_context
-#     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-#     print(f'[update_paged_table]: button_id: {button_id}')
-#
-#     use_filtered_text = False
-#
-#     if text_filter is not None:
-#         if len(text_filter) > 0:
-#             # https://www.geeksforgeeks.org/get-all-rows-in-a-pandas-dataframe-containing-given-substring/
-#             filtered_df = tag_data_df[tag_data_df['tag'].str.contains(text_filter) |
-#                                       tag_data_df['copy_text'].astype(str).str.contains(text_filter) |
-#                                       tag_data_df['random2'].str.contains(text_filter) |
-#                                       tag_data_df['random1'].str.contains(text_filter) |
-#                                       tag_data_df['reverse'].str.contains(text_filter) |
-#                                       tag_data_df['comment'].str.contains(text_filter) |
-#                                       tag_data_df['tag_id'].astype(str).str.contains(text_filter)]
-#             use_filtered_text = True
-#
-#     if active_cell is not None:
-#         print(f'[update_paged_table]: active_cell: {active_cell}')
-#         # table_id = page_current * page_size +
-#         if 'but' in button_id:
-#             row = active_cell['row']
-#             tag_table_id = derived_viewport_data[row]['tag_id']
-#             print(f'[update_paged_table]: tag_table_id: {tag_table_id}')
-#             print(f"[update_paged_table]: before : {tag_data_df.at[tag_table_id, 'tag']}")
-#             tag_data_df.at[tag_table_id, 'tag'] = button_id
-#             print(f"[update_paged_table]: after : {tag_data_df.at[tag_table_id, 'tag']}")
-#             # sql_update(button_id, tag_table_id)
-#
-#     if filter_table == 1:
-#         # Only Untagged
-#         if use_filtered_text:
-#             untagged_df = filtered_df[tag_data_df['tag'].str.contains('Untagged')]
-#         else:
-#             untagged_df = tag_data_df[tag_data_df['tag'].str.contains('Untagged')]
-#
-#         res = untagged_df.iloc[
-#               page_current * page_size:(page_current + 1) * page_size
-#               ]
-#     else:
-#         if use_filtered_text:
-#             res = filtered_df.iloc[
-#                   page_current * page_size:(page_current + 1) * page_size
-#                   ]
-#         else:
-#             res = tag_data_df.iloc[
-#                   page_current * page_size:(page_current + 1) * page_size
-#                   ]
-#
-#     # dict(name='Tag', id='tag', ),
-#     # dict(name='Copy', id='copy_text', ),
-#     # dict(name="random2", id="random2", ),
-#     # dict(name="random1", id="random1", ),
-#     # dict(name='Right Text', id='reverse', ),
-#     # dict(name='Left Text', id='comment'),
-#     # dict(name='Tag Id', id='tag_id'),
-#
-#     return res.to_dict('records'), None
-
-
-# @app.callback(
-#     Output('records-data-table', 'data'),
-#     tag_buttons_input,
-#     Input('text-filter', 'value'),  # -4
-#     Input('filter-table', 'value'),  # -3
-#     State('records-data-table', 'active_cell'),  # -2
-#     State('records-data-table', 'derived_viewport_data')  # -1
-# )
-# def on_btn_click(*args):
-#     print(f'[on_btn_click]: Start')
-#     print(f'[on_btn_click]: args: {args}')
-#
-#     text_filter = args[-4]
-#     filter_table = args[-3]
-#     active_cell = args[-2]
-#     derived_viewport_data = args[-1]
-#
-#     print(f'[on_btn_click]: text_filter: {text_filter}')
-#     # print(f'[on_btn_click]: derived_viewport_data: {derived_viewport_data}')
-#
-#     ctx = callback_context
-#     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-#     print(f'[on_btn_click]: button_id: {button_id}')
-#
-#     if derived_viewport_data is None:
-#         print(f'[on_btn_click]: no_update, derived_viewport_data is None')
-#         return no_update
-#
-#     if active_cell is not None:
-#         handle_tag_button(active_cell, button_id, derived_viewport_data)
-#
-#     # dff = tag_model_df.copy()
-#     dff = tag_model_df[~tag_model_df['tag'].str.contains('but')]
-#
-#     print(f'[on_btn_click]: End')
-#     # return  no_update
-#
-#     # if text_filter is not None:
-#     #     if len(text_filter) > 0:
-#     #         # df = dff[dff['comment'].isin([text_filter])]
-#     #         df = dff.filter(like=text_filter, axis=0)
-#     #         df = dff.columns.to_series().str.contains(text_filter)
-#     #         df = dff[dff['comment'].str.contains(text_filter)]
-#     #         # df = dff[dff..str.contains(text_filter)]
-#     #         return df.to_dict('records')
-#
-#     # # identify partial string to look for
-#     # keep = ["Wes"]
-#     #
-#     # # filter for rows that contain the partial string "Wes" in the conference column
-#     # df[df.conference.str.contains('|'.join(keep))]
-#
-#     if filter_table == 2:
-#         return tag_model_df.to_dict('records')
-#     else:
-#         return dff.to_dict('records')
 
 
 def handle_tag_button(active_cell, button_id, derived_viewport_data):

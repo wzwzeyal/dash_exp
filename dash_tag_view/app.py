@@ -54,11 +54,12 @@ def on_data_change(data):
     # return no_update
     print(f'[on_data_change]: Start')
     nof_tags_left = len(tag_data_df[tag_data_df['tag'].str.contains("Untagged")])
+    badge = f'{nof_tags_left} / {len(tag_data_df)}'
     percent_left = nof_tags_left / len(tag_data_df)
     percent_left *= 100
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
-    return nof_tags_left, percent_left
+    return badge, percent_left
 
 
 def get_next_untagged():
@@ -103,7 +104,7 @@ def on_tag_click(*args):
 
     # handle tag button click
 
-    if 'but' in button_id:
+    if 'but' in button_id or 'Untagged' in button_id:
         # change current tag (init or not selected)
         if derived_viewport_selected_rows is None or len(derived_viewport_selected_rows) == 0:
             print(f'[on_tag_click]: change current tag')

@@ -89,9 +89,13 @@ data_table_layout = html.Div(
         ),
 
     ],
+
     style=
     {
-        'width': '98%',
+        'width': '97%',
+        'position': 'absolute',
+        'top' : 680,
+        'left' : 10,
         # 'display': 'flex',
         # 'margin-left': '20',
         # 'overflow-y': 'scroll',

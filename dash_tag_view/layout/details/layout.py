@@ -6,7 +6,7 @@ details_layout = html.Div(
             id='left-textarea-example',
             value='left-textarea-example',
             readOnly=True,
-            style={'width': '48%', 'height': 200, 'direction': 'rtl', 'border-style': 'none', 'margin-right': '2%'},
+            style={'width': '48%', 'height': 400, 'direction': 'rtl', 'border-style': 'none', 'margin-right': '2%'},
 
         ),
 
@@ -15,7 +15,7 @@ details_layout = html.Div(
 
             value='right-textarea-example',
             readOnly=True,
-            style={'width': '50%', 'height': 200, 'direction': 'rtl', 'border-style': 'none'},  # 'margin': '2%'},  # 'margin-left': "10%"},
+            style={'width': '50%', 'height': 400, 'direction': 'rtl', 'border-style': 'none'},  # 'margin': '2%'},  # 'margin-left': "10%"},
 
         ),
 

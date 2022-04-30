@@ -69,7 +69,6 @@ def on_data_change(_):
 
 
 def get_next_untagged():
-
     res = sql_select_next()
 
     # data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")

@@ -44,7 +44,7 @@ details_layout = html.Div(
 
         html.Div(
             [
-                dcc.Textarea(
+                dbc.Textarea(
                     id="textarea_id",
                     style={'width': '100%', "overflow": "auto", "borderStyle": "groove"},
                 ),
@@ -57,7 +57,7 @@ details_layout = html.Div(
                         "fontSize": 20,
                     },
                 ),
-            ], style={"width": "100%", "position": "relative"}
+            ], style={"width": "100%"}
         ),
     ],
     id="details",

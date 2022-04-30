@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add sql support&#10;table formatting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,7 +160,7 @@
       <workItem from="1650717163896" duration="21878000" />
       <workItem from="1650747302434" duration="979000" />
       <workItem from="1650789275903" duration="1148000" />
-      <workItem from="1650823847444" duration="23383000" />
+      <workItem from="1650823847444" duration="24129000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -364,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651343146291</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="add sql support&#10;table formatting">
+      <created>1651344027919</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1651344027919</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +402,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../dash_tag_view/app.py</url>
-          <line>230</line>
+          <line>229</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>

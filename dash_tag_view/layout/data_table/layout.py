@@ -5,9 +5,9 @@ from dash import dash_table
 from dash import html
 from sqlalchemy import create_engine
 
-predefined_csv = True
+predefined_csv = False
 
-use_postgres = False
+use_postgres = True
 
 if predefined_csv:
     print("predefined_csv")
@@ -88,7 +88,20 @@ data_table_layout = html.Div(
                 'overflow': 'hidden',
                 'textOverflow': 'ellipsis',
             },
-
+            style_data_conditional=[
+                {
+                    'if': {
+                        'state': 'active'  # 'active' | 'selected'
+                    },
+                    'backgroundColor': 'white'
+                },
+                {
+                    'if': {
+                        'state': 'selected'  # 'active' | 'selected'
+                    },
+                    'backgroundColor': 'white'
+                },
+            ],
         ),
 
     ],

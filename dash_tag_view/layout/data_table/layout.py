@@ -26,7 +26,7 @@ if predefined_csv:
     predefined_csv['random1'] = pd.Series(random.choices(random1, k=len(predefined_csv)), index=predefined_csv.index)
     predefined_csv['random2'] = pd.Series(random.choices(random2, k=len(predefined_csv)), index=predefined_csv.index)
     print(f'[tag_model_df.to_sql]: Start')
-    if use_postgres:
+    if True:
         engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
         with engine.begin() as connection:
             predefined_csv.to_sql('test_tsv', con=connection, if_exists='replace')
@@ -37,18 +37,23 @@ if predefined_csv:
 #     tag_data_df = pd.read_sql_query("SELECT * FROM test_tsv", con=connection)
 
 if use_postgres:
-    tag_data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
+    pass
+    # tag_data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
 else:
     tag_data_df = predefined_csv.copy()
 
-print(len(tag_data_df))
-# print(tag_data_df.head(10)[['index', 'tag_id']])
-tag_data_df.sort_values(by='tag_id', inplace=True)
-tag_data_df.set_index('tag_id', inplace=True, drop=False)
-print(tag_data_df.columns)
+# print(len(tag_data_df))
+# # print(tag_data_df.head(10)[['index', 'tag_id']])
+# tag_data_df.sort_values(by='tag_id', inplace=True)
+# tag_data_df.set_index('tag_id', inplace=True, drop=False)
+# print(tag_data_df.columns)
 # print(tag_data_df.head(10)[['index', 'tag_id']])
 
-tagged_df = tag_data_df[~tag_data_df['tag'].str.contains('Untagged')]
+data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
+data_df.sort_values(by='tag_id', inplace=True)
+data_df.set_index('tag_id', inplace=True, drop=False)
+
+tagged_df = data_df[~data_df['tag'].str.contains('Untagged')]
 
 data_table_layout = html.Div(
     [

@@ -1,7 +1,10 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
+import pandas as pd
 
-from layout.data_table.layout import tag_data_df
+# from layout.data_table.layout import tag_data_df
+
+data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
 
 table_buttons_layout = html.Div(
     [
@@ -40,7 +43,7 @@ table_buttons_layout = html.Div(
                         dbc.Button(
                             [
                                 "Untagged ",
-                                dbc.Badge(len(tag_data_df), id="badge", color="light", text_color="primary"),
+                                dbc.Badge(len(data_df), id="badge", color="light", text_color="primary"),
                             ],
                             color="primary",
                             active=False,

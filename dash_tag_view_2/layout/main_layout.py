@@ -25,8 +25,9 @@ def create_layout():
         style={
             'display': 'grid',
             'grid-template-columns': '3fr 1fr',
-            'grid-template-rows': '5% auto 5% 25%',
+            'grid-template-rows': '7% auto 5% auto',
             'position': 'absolute',
+            'padding': '10px',
             'top': 0,
             'bottom': 0,
             'height': '100%',

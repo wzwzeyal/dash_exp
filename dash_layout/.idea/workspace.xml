@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add sql support&#10;table formatting">
-      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/css_grid.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../css_grid/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/dash_tag_view_2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dash_layout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dash_layout.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add grid">
+      <change beforePath="$PROJECT_DIR$/../css_grid/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../css_grid/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +49,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "PluginDummyText.Genre": "esoteric",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/home/eyalshw/git/dash_exp/dash_tag_view_2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -75,7 +68,7 @@
       <recent name="$PROJECT_DIR$/../dash_postgres/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app (3)">
+  <component name="RunManager" selected="Python.app (4)">
     <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="dash_layout" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -195,8 +188,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app (3)" />
         <item itemvalue="Python.app (4)" />
+        <item itemvalue="Python.app (3)" />
         <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.app (2)" />
       </list>
@@ -219,7 +212,8 @@
       <workItem from="1650823847444" duration="24788000" />
       <workItem from="1651647235671" duration="276000" />
       <workItem from="1651647533164" duration="49000" />
-      <workItem from="1651648139501" duration="33322000" />
+      <workItem from="1651648139501" duration="33795000" />
+      <workItem from="1651776224263" duration="7227000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -438,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651344914115</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="add grid">
+      <created>1651768343544</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1651768343545</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -461,7 +462,8 @@
     <MESSAGE value="add postgres" />
     <MESSAGE value="fix tag update" />
     <MESSAGE value="add sql support&#10;table formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="add sql support&#10;table formatting" />
+    <MESSAGE value="add grid" />
+    <option name="LAST_COMMIT_MESSAGE" value="add grid" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -472,11 +474,6 @@
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../css_grid/app.py</url>
-          <line>23</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../dash_tag_view_2/layout/data_table/layout.py</url>
           <line>54</line>
           <option name="timeStamp" value="42" />
@@ -485,10 +482,10 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/dash_layout$app__3_.coverage" NAME="app (3) Coverage Results" MODIFIED="1651768033176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view_2" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__3_.coverage" NAME="app (3) Coverage Results" MODIFIED="1651776249558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view_2" />
     <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1651343834121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
     <SUITE FILE_PATH="coverage/dash_layout$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1650571205785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_postgres" />
     <SUITE FILE_PATH="coverage/dash_layout$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1650721475908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/dash_layout$app__4_.coverage" NAME="app (4) Coverage Results" MODIFIED="1651669084961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../css_grid" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__4_.coverage" NAME="app (4) Coverage Results" MODIFIED="1651781492927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../css_grid" />
   </component>
 </project>

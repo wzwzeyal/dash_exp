@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../css_grid/.idea/css_grid.iml" filepath="$PROJECT_DIR$/../css_grid/.idea/css_grid.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/dash_layout.iml" filepath="$PROJECT_DIR$/.idea/dash_layout.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dash_ner/.idea/dash_ner.iml" filepath="$PROJECT_DIR$/../dash_ner/.idea/dash_ner.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dash_postgres/.idea/dash_postgres.iml" filepath="$PROJECT_DIR$/../dash_postgres/.idea/dash_postgres.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dash_tag/.idea/dash_tag.iml" filepath="$PROJECT_DIR$/../dash_tag/.idea/dash_tag.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dash_tag_view/.idea/dash_tag_view.iml" filepath="$PROJECT_DIR$/../dash_tag_view/.idea/dash_tag_view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dash_tag_view_2/.idea/dash_tag_view_2.iml" filepath="$PROJECT_DIR$/../dash_tag_view_2/.idea/dash_tag_view_2.iml" />
     </modules>
   </component>
 </project>

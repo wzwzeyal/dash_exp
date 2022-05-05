@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add sql support&#10;table formatting">
+      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/css_grid.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../css_grid/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../css_grid/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/dash_tag_view_2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dash_layout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dash_layout.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view/layout/details/layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,8 +61,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/eyalshw/git/dash_exp/dash_postgres/resources",
-    "settings.editor.selected.configurable": "reference.idesettings.debugger.python"
+    "last_opened_file_path": "/home/eyalshw/git/dash_exp/dash_tag_view_2",
+    "settings.editor.selected.configurable": "preferences.keymap"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -67,7 +75,7 @@
       <recent name="$PROJECT_DIR$/../dash_postgres/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.app (3)">
     <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="dash_layout" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,6 +120,50 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="app (3)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dash_tag_view_2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../dash_tag_view_2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../dash_tag_view_2/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app (4)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="css_grid" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../css_grid" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../css_grid/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="dash_tag_view" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -136,11 +188,15 @@
     </configuration>
     <list>
       <item itemvalue="Python.app" />
+      <item itemvalue="Python.app (4)" />
+      <item itemvalue="Python.app (3)" />
       <item itemvalue="Python.app (1)" />
       <item itemvalue="Python.app (2)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app (3)" />
+        <item itemvalue="Python.app (4)" />
         <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.app (2)" />
       </list>
@@ -160,7 +216,10 @@
       <workItem from="1650717163896" duration="21878000" />
       <workItem from="1650747302434" duration="979000" />
       <workItem from="1650789275903" duration="1148000" />
-      <workItem from="1650823847444" duration="24129000" />
+      <workItem from="1650823847444" duration="24788000" />
+      <workItem from="1651647235671" duration="276000" />
+      <workItem from="1651647533164" duration="49000" />
+      <workItem from="1651648139501" duration="33322000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -372,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651344027919</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="add sql support&#10;table formatting">
+      <created>1651344914115</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1651344914115</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,12 +471,24 @@
           <line>229</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../css_grid/app.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../dash_tag_view_2/layout/data_table/layout.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/dash_layout$app__3_.coverage" NAME="app (3) Coverage Results" MODIFIED="1651768033176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view_2" />
     <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1651343834121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
     <SUITE FILE_PATH="coverage/dash_layout$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1650571205785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_postgres" />
     <SUITE FILE_PATH="coverage/dash_layout$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1650721475908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__4_.coverage" NAME="app (4) Coverage Results" MODIFIED="1651669084961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../css_grid" />
   </component>
 </project>

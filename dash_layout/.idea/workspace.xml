@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add tagger">
-      <change beforePath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tagger/callbacks.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/callbacks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tagger/layout/tag/tag_buttons/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/layout/tag/tag_buttons/layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tagger/resources/strings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/resources/strings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tagger/layout/status/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/layout/status/layout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -494,7 +491,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651949769893</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="add tagger">
+      <created>1651956888857</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1651956888857</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

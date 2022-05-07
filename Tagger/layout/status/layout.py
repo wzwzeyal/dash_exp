@@ -29,10 +29,11 @@ status_layout = html.Div(
             style=
             {
                 'margin-left': '2em',
+                'background-color': '#ffffff',
                 # 'height': 20,
                 # 'border': 'groove',
-                'width': '60%',
-                'height': '5px'
+                'width': '70%',
+                'height': '10px'
             },
         ),
     ],

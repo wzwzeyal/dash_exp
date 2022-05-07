@@ -40,12 +40,14 @@ buttons_array = html.Div(
     [
         html.Div(
             lst[:20],
-            style={'border-style': 'none', 'height': '65%', 'margin-top': '10px'}
+            className="button_array",
+            # style={'height': '65%', }
 
         ),
         html.Div(
             lst[20:],
-            style={'border-style': 'none', 'height': '35%', 'margin-top': '10px'}
+            className="button_array",
+            # style={'height': '35%', }
         ),
     ],
     id="buttons_array",

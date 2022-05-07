@@ -44,6 +44,11 @@
     margin-left: 2%;
 }
 
+.button_array {
+    border-style: none;
+    margin-top: 10px;
+}
+
 .row_text {
     border-style: none;
     height: 45%;
@@ -87,6 +92,8 @@
 #buttons_array {
     margin-top: 10px;
     width: 25%;
+    display: grid;
+    grid-template-rows: 70% 30%;
 }
 
 #status_layout {

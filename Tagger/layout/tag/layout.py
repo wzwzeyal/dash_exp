@@ -1,7 +1,7 @@
-from dash import html, dcc
+from dash import html
 
-from layout.tag.buttons_array_layout import buttons_array
-from layout.tag.row_details_layout import row_details
+from layout.tag.tag_buttons.layout import buttons_array
+from layout.tag.tag_data.layout import row_details
 
 tag_layout = html.Div(
     [

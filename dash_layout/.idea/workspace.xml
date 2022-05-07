@@ -4,38 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add grid">
-      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/Tagger.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/callbacks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/index.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/header/layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/main_layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/status/layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/table/layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/buttons_array_layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/row_details_layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tagger/resources/strings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/header.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/status_layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/table_layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/tag_layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../css_grid/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../css_grid/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dash_layout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dash_layout.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add tagger">
+      <change beforePath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tagger/layout/tag/buttons_array_layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Tagger/layout/tag/buttons_array_layout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/assets/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/assets/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/button_array/layout.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/data_table/layout.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/details/layout.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/header/layout.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/table_buttons/layout.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,7 +245,7 @@
       <workItem from="1651647533164" duration="49000" />
       <workItem from="1651648139501" duration="33795000" />
       <workItem from="1651776224263" duration="19089000" />
-      <workItem from="1651941731142" duration="5304000" />
+      <workItem from="1651941731142" duration="5979000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -506,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651783467340</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="add tagger">
+      <created>1651947097676</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1651947097676</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,7 +510,8 @@
     <MESSAGE value="fix tag update" />
     <MESSAGE value="add sql support&#10;table formatting" />
     <MESSAGE value="add grid" />
-    <option name="LAST_COMMIT_MESSAGE" value="add grid" />
+    <MESSAGE value="add tagger" />
+    <option name="LAST_COMMIT_MESSAGE" value="add tagger" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

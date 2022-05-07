@@ -31,6 +31,9 @@
 }
 
 #body {
+    display: grid;
+    /*grid-template-rows: 5% 70% 5%;*/
+    grid-template-rows: 1fr 30fr 1fr 10fr;
     background-color: #eff2f5;
     position: absolute;
     top: 0;
@@ -70,7 +73,6 @@
 
 #tag_layout {
     display: flex;
-    height: 70%;
     background-color: #ffffff;
 }
 
@@ -101,5 +103,8 @@
     align-items: center;
 }
 
+#table_layout {
+    overflow-y: scroll;
+}
 
 

@@ -10,7 +10,6 @@ tagged_df = data_df[~data_df['tag'].str.contains('Untagged')]
 
 table_layout = html.Div(
     [
-
         dash_table.DataTable(
             tagged_df.head(10).to_dict('records'),
             # [{"name": i, "id": i} for i in tag_data_df.columns],
@@ -60,9 +59,10 @@ table_layout = html.Div(
     ],
 
     className="base_layout",
-    style=
-    {
-        'position': 'absolute',
-        'left': 10,
-    },
+    id="table_layout",
+    # style=
+    # {
+    #     'position': 'absolute',
+    #     'left': 10,
+    # },
 )

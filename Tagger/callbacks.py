@@ -13,9 +13,9 @@ from resources.strings import tag_button_names
 engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
 
 tag_buttons_input = []
-for item in tag_button_names:
+for item in range(len(tag_button_names)):
     tag_buttons_input.append(
-        Input(item, 'n_clicks'))
+        Input(f'but{str(item)}', 'n_clicks'))
 
 
 @app.callback(

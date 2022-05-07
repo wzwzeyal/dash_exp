@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="dash_postgres" />
     <orderEntry type="module" module-name="dash_tag_view_2" />
     <orderEntry type="module" module-name="css_grid" />
+    <orderEntry type="module" module-name="Tagger" />
   </component>
 </module>

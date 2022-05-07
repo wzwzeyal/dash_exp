@@ -1,14 +1,9 @@
+from dash import html, dcc
 import dash_bootstrap_components as dbc
-import pandas as pd
-from dash import html
 
-# from layout.data_table.layout import tag_data_df
-
-data_df = pd.read_sql_table('test_tsv', "postgresql://postgres:postgres@localhost/test")
-
-table_buttons_layout = html.Div(
+status_layout = html.Div(
     [
-        html.Div(
+        html.H4(
             [
                 html.Span(
                     'Tagged texts: '
@@ -41,12 +36,7 @@ table_buttons_layout = html.Div(
             },
         ),
     ],
-    style={
-        'display': 'flex',
-        # 'margin': '1em',
-        # 'flex-wrap': 'nowrap',
-        'grid-column': '1 / -1',
-        'align-items': 'center',
-        # 'display': 'inline',
-    },
+    className="base_layout",
+    id = "status_layout",
+    style={'display': 'flex', 'align-items': 'center'}
 )

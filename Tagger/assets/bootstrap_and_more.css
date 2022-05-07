@@ -30,6 +30,69 @@
  display : block !important;
 }
 
-/*#header_layout {*/
-/*  background-color: green;*/
-/*}*/
+#body {
+    background-color: #eff2f5;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.base_layout {
+    width: 95%;
+    margin-left: 2%;
+}
+
+.row_text {
+    border-style: none;
+    height: 45%;
+    direction: rtl;
+}
+
+.additional_data {
+    flex: 1;
+    border: 1px solid;
+}
+
+.tag_spacer {
+    border: 2px solid #eff2f5;
+    margin-top: 2%;
+    height: 89%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#tag_layout {
+    display: flex;
+    height: 70%;
+    background-color: #ffffff;
+}
+
+#row_additional_data {
+    display: flex;
+    gap: 20px;
+    height: 7%;
+    align-content: start;
+}
+
+#row_details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 70%;
+    margin-left: 2%;
+}
+
+#buttons_array {
+    margin-top: 10px;
+    width: 25%;
+}
+
+#status_layout {
+    display: flex;
+    align-items: center;
+}
+
+
+

@@ -1,6 +1,6 @@
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
+from app import app
 
+import dash_bootstrap_components as dbc
 import pandas as pd
 # sudo kill $(sudo lsof -t -i:8050)
 from dash import Dash
@@ -8,29 +8,9 @@ from dash import Input, Output, no_update, callback_context, State
 from flask import Flask
 from sqlalchemy import create_engine, text
 
-from layout.main_layout import create_layout
 from resources.strings import tag_button_names
 
 engine = create_engine('postgresql://postgres:postgres@localhost/test', echo=True)
-
-server = Flask(__name__)
-
-app = Dash(__name__, server=server, suppress_callback_exceptions=False,
-           meta_tags=[
-               {
-                   'name': 'viewport',
-                   'content': 'width=device-width, initial-scale=1.0, height=device-height'
-               }
-           ])
-# external_stylesheets=[dbc.themes.MINTY],)
-
-app.server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.server.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost/test"
-
-# db = SQLAlchemy(app.server)
-# app = DashProxy(prevent_initial_callbacks=True, transforms=[TriggerTransform(), GroupTransform()])
-
-app.layout = create_layout()
 
 tag_buttons_input = []
 for item in tag_button_names:
@@ -39,6 +19,8 @@ for item in tag_button_names:
 
 
 @app.callback(
+    Output('nof-tagged-texts', 'children'),
+    Output('nof-total-texts', 'children'),
     Output('tag-left-progress', 'value'),
     Input('records-data-table', 'data'),
 )
@@ -48,11 +30,12 @@ def on_data_change(_):
     print(f'[on_data_change]: Start')
     nof_records = sql_count()
     nof_tags_left = sql_count("WHERE tag='Untagged'")  # len(data_df[data_df['tag'].str.contains("Untagged")])
-    percent_tagged = (nof_records - nof_tags_left) / nof_records
+    nof_tagged = nof_records - nof_tags_left
+    percent_tagged = nof_tagged / nof_records
 
     print(f'[on_data_change]: nof_tags_left: {nof_tags_left}')
     print(f'[on_data_change]: End')
-    return percent_tagged * 100
+    return str(nof_tagged), str(nof_records), percent_tagged * 100
 
 
 def get_next_untagged():
@@ -64,7 +47,7 @@ def get_next_untagged():
 @app.callback(
     Output('left-textarea-example', 'value'),
     Output('right-textarea-example', 'value'),
-    Output('textarea_id', 'value'),
+    # Output('text1', 'children'),
     Output('records-data-table', 'data'),
     Output('records-data-table', 'active_cell'),
     tag_buttons_input,
@@ -101,7 +84,7 @@ def on_button_click(*args):
         output_res = (
             next_untagged['comment'],
             next_untagged['reverse'],
-            str(next_untagged['copy_text']),
+            # str(next_untagged['copy_text']),
             tagged_data.to_dict('records'),
             no_update,
         )
@@ -130,7 +113,8 @@ def update_text_on_switching_active_cell(active_cell, data):
     selected_row = active_cell['row_id']
     if selected_row < len(data):
         row = data[selected_row]
-        output_res = (row['comment'], row['reverse'], str(row['copy_text']),
+        output_res = (row['comment'], row['reverse'],
+                      # str(row['copy_text']),
                       no_update, no_update,)
 
     print(f'[update_text_on_switching_active_cell]: End')
@@ -147,7 +131,8 @@ def update_active_cell_tag(data_df, active_cell, button_id, data, next_untagged)
     sql_update(button_id, tag_table_id)
     tagged_data = data_df[~data_df['tag'].str.contains('Untagged')]
     output_res = (next_untagged['comment'], next_untagged['reverse'],
-                  str(next_untagged['copy_text']), tagged_data.to_dict('records'),
+                  # str(next_untagged['copy_text']),
+                  tagged_data.to_dict('records'),
                   None,)
     print(f'[update_active_cell_tag]: End')
     return output_res
@@ -161,7 +146,7 @@ def update_details_tag(data_df, button_id, next_untagged):
     next_untagged = get_next_untagged()
     tagged_data = data_df[~data_df['tag'].str.contains('Untagged')]
     output_res = (next_untagged['comment'], next_untagged['reverse'],
-                  str(next_untagged['copy_text']),
+                  # str(next_untagged['copy_text']),
                   tagged_data.to_dict('records'),
                   no_update,
                   )
@@ -217,5 +202,4 @@ def sql_update(button_id, table_id):
     print(f'[sql_update]: End')
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0')
+

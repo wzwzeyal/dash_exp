@@ -5,9 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13be8ff9-b4c6-4da3-9577-0f9d813064c9" name="Changes" comment="add grid">
-      <change afterPath="$PROJECT_DIR$/../css_grid/assets/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/Tagger.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/assets/bootstrap_and_more.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/callbacks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/index.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/header/layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/main_layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/status/layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/table/layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/buttons_array_layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/layout/tag/row_details_layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tagger/resources/strings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/header.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/status_layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/table_layout.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/tag_layout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../css_grid/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../css_grid/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dash_layout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dash_layout.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/assets/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/assets/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/button_array/layout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/data_table/layout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/details/layout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/header/layout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dash_tag_view_2/layout/main_layout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dash_tag_view_2/layout/table_buttons/layout.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,33 +70,40 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="287A2VGxHc2raBflFM731F5Vkl7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "PluginDummyText.Genre": "esoteric",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/eyalshw/git/dash_exp/dash_tag_view_2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;PluginDummyText.Genre&quot;: &quot;esoteric&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/eyalshw/git/dash_exp/dash_tag_view_2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/../dash_postgres/resources" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../dash_tag_view_2/assets" />
+      <recent name="$PROJECT_DIR$/../dash_tag_view_2/layout" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.app (4)">
+  <component name="RunManager" selected="Python.index">
     <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="dash_layout" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -179,8 +214,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="index" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Tagger" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Tagger" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Tagger/index.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.app" />
+      <item itemvalue="Python.index" />
       <item itemvalue="Python.app (4)" />
       <item itemvalue="Python.app (3)" />
       <item itemvalue="Python.app (1)" />
@@ -188,8 +246,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app (4)" />
+        <item itemvalue="Python.index" />
         <item itemvalue="Python.app (3)" />
+        <item itemvalue="Python.app (4)" />
         <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.app (2)" />
       </list>
@@ -214,6 +273,7 @@
       <workItem from="1651647533164" duration="49000" />
       <workItem from="1651648139501" duration="33795000" />
       <workItem from="1651776224263" duration="19089000" />
+      <workItem from="1651941731142" duration="5304000" />
     </task>
     <task id="LOCAL-00001" summary="add br">
       <created>1650557656696</created>
@@ -464,6 +524,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="add br" />
     <MESSAGE value="fix table" />
     <MESSAGE value="add postgres" />
@@ -485,14 +546,20 @@
           <line>54</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../dash_tag_view_2/app.py</url>
+          <line>99</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/dash_layout$app__3_.coverage" NAME="app (3) Coverage Results" MODIFIED="1651824160245" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view_2" />
-    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1651828521646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__3_.coverage" NAME="app (3) Coverage Results" MODIFIED="1651929389307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view_2" />
+    <SUITE FILE_PATH="coverage/dash_layout$app.coverage" NAME="app Coverage Results" MODIFIED="1651861148506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_tag_view" />
+    <SUITE FILE_PATH="coverage/dash_layout$index.coverage" NAME="index Coverage Results" MODIFIED="1651946893374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Tagger" />
     <SUITE FILE_PATH="coverage/dash_layout$app__2_.coverage" NAME="app (2) Coverage Results" MODIFIED="1650571205785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../dash_postgres" />
     <SUITE FILE_PATH="coverage/dash_layout$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1650721475908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/dash_layout$app__4_.coverage" NAME="app (4) Coverage Results" MODIFIED="1651854119557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../css_grid" />
+    <SUITE FILE_PATH="coverage/dash_layout$app__4_.coverage" NAME="app (4) Coverage Results" MODIFIED="1651860400357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../css_grid" />
   </component>
 </project>

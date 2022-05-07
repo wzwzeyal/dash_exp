@@ -9,7 +9,6 @@ PAGE_SIZE = 5
 
 row_details = html.Div(
     [
-
         dbc.Textarea(placeholder="1", style={'border-style': 'none', 'height': '45%'}),
         dbc.Textarea(placeholder="2", style={'border-style': 'none', 'height': '45%'}),
 
@@ -75,11 +74,6 @@ buttons_array = html.Div(
             style={'border-style': 'none', 'height': '35%', 'margin-top': '10px'}
         ),
     ],
-    # [
-    #     # dbc.Textarea(placeholder="1", style={'border-style': 'none', 'height': '50%'}),
-    #
-    #     dbc.Textarea(placeholder="2", style={'border-style': 'none', 'height': '50%'}),
-    # ],
     style={'display': 'flex', 'flex-direction': 'column', 'height': '100%'}
 )
 
@@ -155,11 +149,7 @@ app.layout = html.Div(
     ],
     id='body',
     style={
-        # 'display': 'flex',
-        # 'flex-direction': 'column',
         'background-color': '#eff2f5',
-        # 'flex-grow': '1',
-
         'position': 'absolute',
         'top': 0,
         'bottom': 0,

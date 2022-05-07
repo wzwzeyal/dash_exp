@@ -1,37 +1,33 @@
-import dash_bootstrap_components as dbc
-from dash import html
+from dash import html, dcc
 
-from layout.button_array.layout import button_array_layout
-from layout.data_table.layout import data_table_layout
-from layout.details.layout import details_layout
-from layout.header.layout import header_layout
-from layout.table_buttons.layout import table_buttons_layout
+from layout.status_layout import status_layout
+from layout.table_layout import table_layout
+from layout.tag_layout import tag_layout
+from layout.header import header_layout
 
 
 def create_layout():
     layout = html.Div(
-
         [
-            header_layout,
+            html.Div([header_layout], style={'height': '5%', 'width': '95%', 'margin-left': '2%'}),
 
-            details_layout,
+            html.Div([tag_layout], style={'height': '70%', 'width': '95%', 'margin-left': '2%'}),
 
-            button_array_layout,
+            html.Div([status_layout], style={'height': '10%', 'width': '95%', 'margin-left': '2%'}),
 
-            table_buttons_layout,
+            html.Div([table_layout], style={'height': '70%', 'width': '95%', 'margin-left': '2%'}),
 
-            data_table_layout,
+            # table_layout,
         ],
+        id='body',
         style={
-            'display': 'grid',
-            'grid-template-columns': '3fr 1fr',
-            'grid-template-rows': '7% auto 5% auto',
+            'background-color': '#eff2f5',
             'position': 'absolute',
-            'padding': '10px',
             'top': 0,
             'bottom': 0,
             'height': '100%',
             'width': '100%',
         }
     )
+
     return layout
